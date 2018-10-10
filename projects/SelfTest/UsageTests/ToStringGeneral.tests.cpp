@@ -100,3 +100,77 @@ TEST_CASE( "std::set is convertible string", "[toString]" ) {
         REQUIRE( Catch::Detail::stringify( set ) == "{ \"abc\", \"def\", \"ghi\" }" );
     }
 }
+
+TEST_CASE("Static arrays are convertible to string", "[toString]") {
+    SECTION("Single item") {
+        int singular[1] = { 1 };
+        REQUIRE(Catch::Detail::stringify(singular) == "{ 1 }");
+    }
+    SECTION("Multiple") {
+        int arr[3] = { 3, 2, 1 };
+        REQUIRE(Catch::Detail::stringify(arr) == "{ 3, 2, 1 }");
+    }
+    SECTION("Non-trivial inner items") {
+        std::vector<std::string> arr[2] = { {"1:1", "1:2", "1:3"}, {"2:1", "2:2"} };
+        REQUIRE(Catch::Detail::stringify(arr) == R"({ { "1:1", "1:2", "1:3" }, { "2:1", "2:2" } })");
+    }
+}
+
+#ifdef CATCH_CONFIG_CPP17_STRING_VIEW
+
+TEST_CASE("String views are stringified like other strings", "[toString][approvals]") {
+    std::string_view view{"abc"};
+    CHECK(Catch::Detail::stringify(view) == R"("abc")");
+
+    std::string_view arr[] { view };
+    CHECK(Catch::Detail::stringify(arr) == R"({ "abc" })");
+}
+
+#endif
+
+namespace {
+
+struct WhatException : std::exception {
+    char const* what() const noexcept override {
+        return "This exception has overriden what() method";
+    }
+    ~WhatException() override;
+};
+
+struct OperatorException : std::exception {
+    ~OperatorException() override;
+};
+
+std::ostream& operator<<(std::ostream& out, OperatorException const&) {
+    out << "OperatorException";
+    return out;
+}
+
+struct StringMakerException : std::exception {
+    ~StringMakerException() override;
+};
+
+} // end anonymous namespace
+
+namespace Catch {
+template <>
+struct StringMaker<StringMakerException> {
+    static std::string convert(StringMakerException const&) {
+        return "StringMakerException";
+    }
+};
+}
+
+// Avoid -Wweak-tables
+WhatException::~WhatException() = default;
+OperatorException::~OperatorException() = default;
+StringMakerException::~StringMakerException() = default;
+
+
+
+
+TEST_CASE("Exception as a value (e.g. in REQUIRE_THROWS_MATCHES) can be stringified", "[toString][exception]") {
+    REQUIRE(::Catch::Detail::stringify(WhatException{}) == "This exception has overriden what() method");
+    REQUIRE(::Catch::Detail::stringify(OperatorException{}) == "OperatorException");
+    REQUIRE(::Catch::Detail::stringify(StringMakerException{}) == "StringMakerException");
+}

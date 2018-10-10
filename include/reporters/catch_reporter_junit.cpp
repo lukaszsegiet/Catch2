@@ -13,7 +13,7 @@
 #include "../internal/catch_tostring.h"
 #include "../internal/catch_reporter_registrars.hpp"
 
-#include <assert.h>
+#include <cassert>
 #include <sstream>
 #include <ctime>
 #include <algorithm>
@@ -62,9 +62,10 @@ namespace Catch {
             xml( _config.stream() )
         {
             m_reporterPrefs.shouldRedirectStdOut = true;
+            m_reporterPrefs.shouldReportAllAssertions = true;
         }
 
-    JunitReporter::~JunitReporter() {};
+    JunitReporter::~JunitReporter() {}
 
     std::string JunitReporter::getDescription() {
         return "Reports test results in an XML format that looks like Ant's junitreport target";

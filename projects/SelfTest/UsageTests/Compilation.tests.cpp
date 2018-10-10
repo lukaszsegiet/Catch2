@@ -7,10 +7,25 @@
 
 #include "catch.hpp"
 
+#include <cstring>
+
 namespace { namespace CompilationTests {
 
 #ifndef COMPILATION_TEST_HELPERS_INCLUDED // Don't compile this more than once per TU
 #define COMPILATION_TEST_HELPERS_INCLUDED
+
+    // Comparison operators can return non-booleans.
+    // This is unusual, but should be supported.
+    struct logic_t {
+        logic_t operator< (logic_t) const { return {}; }
+        logic_t operator<=(logic_t) const { return {}; }
+        logic_t operator> (logic_t) const { return {}; }
+        logic_t operator>=(logic_t) const { return {}; }
+        logic_t operator==(logic_t) const { return {}; }
+        logic_t operator!=(logic_t) const { return {}; }
+        explicit operator bool() const { return true; }
+    };
+
 
 // This is a minimal example for an issue we have found in 1.7.0
     struct foo {
@@ -73,6 +88,9 @@ namespace { namespace CompilationTests {
 #pragma clang diagnostic pop
 #endif
 
+    template <typename, typename>
+    struct Fixture_1245 {};
+
 #endif
 
     TEST_CASE("#809") {
@@ -107,6 +125,33 @@ namespace { namespace CompilationTests {
         Y y{0};
         REQUIRE(y.v == 0);
         REQUIRE(0 == y.v);
+    }
+
+    // Comparison operators can return non-booleans.
+    // This is unusual, but should be supported.
+    TEST_CASE("#1147") {
+        logic_t t1, t2;
+        REQUIRE(t1 == t2);
+        REQUIRE(t1 != t2);
+        REQUIRE(t1 <  t2);
+        REQUIRE(t1 >  t2);
+        REQUIRE(t1 <= t2);
+        REQUIRE(t1 >= t2);
+    }
+
+    // unsigned array
+    TEST_CASE("#1238") {
+        unsigned char uarr[] = "123";
+        CAPTURE(uarr);
+        signed char sarr[] = "456";
+        CAPTURE(sarr);
+
+        REQUIRE(std::memcmp(uarr, "123", sizeof(uarr)) == 0);
+        REQUIRE(std::memcmp(sarr, "456", sizeof(sarr)) == 0);
+    }
+
+    TEST_CASE_METHOD((Fixture_1245<int, int>), "#1245", "[compilation]") {
+        SUCCEED();
     }
 
 }} // namespace CompilationTests

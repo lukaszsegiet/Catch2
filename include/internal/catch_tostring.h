@@ -13,7 +13,12 @@
 #include <cstddef>
 #include <type_traits>
 #include <string>
+#include "catch_compiler_capabilities.h"
 #include "catch_stream.h"
+
+#ifdef CATCH_CONFIG_CPP17_STRING_VIEW
+#include <string_view>
+#endif
 
 #ifdef __OBJC__
 #include "catch_objc_arc.hpp"
@@ -61,13 +66,37 @@ namespace Catch {
         std::string convertUnknownEnumToString( E e );
 
         template<typename T>
-        typename std::enable_if<!std::is_enum<T>::value, std::string>::type convertUnstreamable( T const& ) {
+        typename std::enable_if<
+            !std::is_enum<T>::value && !std::is_base_of<std::exception, T>::value,
+        std::string>::type convertUnstreamable( T const& ) {
             return Detail::unprintableString;
-        };
+        }
         template<typename T>
-        typename std::enable_if<std::is_enum<T>::value, std::string>::type convertUnstreamable( T const& value ) {
+        typename std::enable_if<
+            !std::is_enum<T>::value && std::is_base_of<std::exception, T>::value,
+         std::string>::type convertUnstreamable(T const& ex) {
+            return ex.what();
+        }
+
+
+        template<typename T>
+        typename std::enable_if<
+            std::is_enum<T>::value
+        , std::string>::type convertUnstreamable( T const& value ) {
             return convertUnknownEnumToString( value );
-        };
+        }
+
+#if defined(_MANAGED)
+        //! Convert a CLR string to a utf8 std::string
+        template<typename T>
+        std::string clrReferenceToString( T^ ref ) {
+            if (ref == nullptr)
+                return std::string("null");
+            auto bytes = System::Text::Encoding::UTF8->GetBytes(ref->ToString());
+            cli::pin_ptr<System::Byte> p = &bytes[0];
+            return std::string(reinterpret_cast<char const *>(p), bytes->Length);
+        }
+#endif
 
     } // namespace Detail
 
@@ -80,7 +109,9 @@ namespace Catch {
         typename std::enable_if<::Catch::Detail::IsStreamInsertable<Fake>::value, std::string>::type
             convert(const Fake& value) {
                 ReusableStringStream rss;
-                rss << value;
+                // NB: call using the function-like syntax to avoid ambiguity with
+                // user-defined templated operator<< under clang.
+                rss.operator<<(value);
                 return rss.str();
         }
 
@@ -88,7 +119,11 @@ namespace Catch {
         static
         typename std::enable_if<!::Catch::Detail::IsStreamInsertable<Fake>::value, std::string>::type
             convert( const Fake& value ) {
-                return Detail::convertUnstreamable( value );
+#if !defined(CATCH_CONFIG_FALLBACK_STRINGIFIER)
+            return Detail::convertUnstreamable(value);
+#else
+            return CATCH_CONFIG_FALLBACK_STRINGIFIER(value);
+#endif
         }
     };
 
@@ -106,6 +141,13 @@ namespace Catch {
             return ::Catch::Detail::stringify(static_cast<typename std::underlying_type<E>::type>(e));
         }
 
+#if defined(_MANAGED)
+        template <typename T>
+        std::string stringify( T^ e ) {
+            return ::Catch::StringMaker<T^>::convert(e);
+        }
+#endif
+
     } // namespace Detail
 
     // Some predefined specializations
@@ -114,10 +156,13 @@ namespace Catch {
     struct StringMaker<std::string> {
         static std::string convert(const std::string& str);
     };
+
+#ifdef CATCH_CONFIG_CPP17_STRING_VIEW
     template<>
-    struct StringMaker<std::wstring> {
-        static std::string convert(const std::wstring& wstr);
+    struct StringMaker<std::string_view> {
+        static std::string convert(std::string_view str);
     };
+#endif
 
     template<>
     struct StringMaker<char const *> {
@@ -127,6 +172,20 @@ namespace Catch {
     struct StringMaker<char *> {
         static std::string convert(char * str);
     };
+
+#ifdef CATCH_CONFIG_WCHAR
+    template<>
+    struct StringMaker<std::wstring> {
+        static std::string convert(const std::wstring& wstr);
+    };
+
+# ifdef CATCH_CONFIG_CPP17_STRING_VIEW
+    template<>
+    struct StringMaker<std::wstring_view> {
+        static std::string convert(std::wstring_view str);
+    };
+# endif
+
     template<>
     struct StringMaker<wchar_t const *> {
         static std::string convert(wchar_t const * str);
@@ -135,35 +194,26 @@ namespace Catch {
     struct StringMaker<wchar_t *> {
         static std::string convert(wchar_t * str);
     };
+#endif
 
-    template<typename T>
-    struct is_string_array : std::false_type {};
-
-    template<std::size_t N>
-    struct is_string_array<char[N]> : std::true_type {};
-
-    template<std::size_t N>
-    struct is_string_array<signed char[N]> : std::true_type {};
-
-        template<std::size_t N>
-    struct is_string_array<unsigned char[N]> : std::true_type {};
-
+    // TBD: Should we use `strnlen` to ensure that we don't go out of the buffer,
+    //      while keeping string semantics?
     template<int SZ>
     struct StringMaker<char[SZ]> {
-        static std::string convert(const char* str) {
+        static std::string convert(char const* str) {
             return ::Catch::Detail::stringify(std::string{ str });
         }
     };
     template<int SZ>
     struct StringMaker<signed char[SZ]> {
-        static std::string convert(const char* str) {
-            return ::Catch::Detail::stringify(std::string{ str });
+        static std::string convert(signed char const* str) {
+            return ::Catch::Detail::stringify(std::string{ reinterpret_cast<char const *>(str) });
         }
     };
     template<int SZ>
     struct StringMaker<unsigned char[SZ]> {
-        static std::string convert(const char* str) {
-            return ::Catch::Detail::stringify(std::string{ str });
+        static std::string convert(unsigned char const* str) {
+            return ::Catch::Detail::stringify(std::string{ reinterpret_cast<char const *>(str) });
         }
     };
 
@@ -247,6 +297,15 @@ namespace Catch {
         }
     };
 
+#if defined(_MANAGED)
+    template <typename T>
+    struct StringMaker<T^> {
+        static std::string convert( T^ ref ) {
+            return ::Catch::Detail::clrReferenceToString(ref);
+        }
+    };
+#endif
+
     namespace Detail {
         template<typename InputIterator>
         std::string rangeToString(InputIterator first, InputIterator last) {
@@ -295,6 +354,7 @@ namespace Catch {
 #if defined(CATCH_CONFIG_ENABLE_ALL_STRINGMAKERS)
 #  define CATCH_CONFIG_ENABLE_PAIR_STRINGMAKER
 #  define CATCH_CONFIG_ENABLE_TUPLE_STRINGMAKER
+#  define CATCH_CONFIG_ENABLE_VARIANT_STRINGMAKER
 #  define CATCH_CONFIG_ENABLE_CHRONO_STRINGMAKER
 #endif
 
@@ -359,6 +419,34 @@ namespace Catch {
 }
 #endif // CATCH_CONFIG_ENABLE_TUPLE_STRINGMAKER
 
+#if defined(CATCH_CONFIG_ENABLE_VARIANT_STRINGMAKER) && defined(CATCH_CONFIG_CPP17_VARIANT)
+#include <variant>
+namespace Catch {
+    template<>
+    struct StringMaker<std::monostate> {
+        static std::string convert(const std::monostate&) {
+            return "{ }";
+        }
+    };
+
+    template<typename... Elements>
+    struct StringMaker<std::variant<Elements...>> {
+        static std::string convert(const std::variant<Elements...>& variant) {
+            if (variant.valueless_by_exception()) {
+                return "{valueless variant}";
+            } else {
+                return std::visit(
+                    [](const auto& value) {
+                        return ::Catch::Detail::stringify(value);
+                    },
+                    variant
+                );
+            }
+        }
+    };
+}
+#endif // CATCH_CONFIG_ENABLE_VARIANT_STRINGMAKER
+
 namespace Catch {
     struct not_this_one {}; // Tag type for detecting which begin/ end are being selected
 
@@ -375,6 +463,13 @@ namespace Catch {
             !std::is_same<decltype(begin(std::declval<T>())), not_this_one>::value &&
             !std::is_same<decltype(end(std::declval<T>())), not_this_one>::value;
     };
+
+#if defined(_MANAGED) // Managed types are never ranges
+    template <typename T>
+    struct is_range<T^> {
+        static const bool value = false;
+    };
+#endif
 
     template<typename Range>
     std::string rangeToString( Range const& range ) {
@@ -399,11 +494,19 @@ namespace Catch {
     }
 
     template<typename R>
-    struct StringMaker<R, typename std::enable_if<is_range<R>::value && !is_string_array<R>::value>::type> {
+    struct StringMaker<R, typename std::enable_if<is_range<R>::value && !::Catch::Detail::IsStreamInsertable<R>::value>::type> {
         static std::string convert( R const& range ) {
             return rangeToString( range );
         }
     };
+
+    template <typename T, int SZ>
+    struct StringMaker<T[SZ]> {
+        static std::string convert(T const(&arr)[SZ]) {
+            return rangeToString(arr);
+        }
+    };
+
 
 } // namespace Catch
 

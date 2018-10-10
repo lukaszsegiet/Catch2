@@ -8,10 +8,13 @@
 
 #include "catch_message.h"
 #include "catch_interfaces_capture.h"
+#include "catch_uncaught_exceptions.h"
+
+#include <cassert>
 
 namespace Catch {
 
-    MessageInfo::MessageInfo(   std::string const& _macroName,
+    MessageInfo::MessageInfo(   StringRef const& _macroName,
                                 SourceLineInfo const& _lineInfo,
                                 ResultWas::OfType _type )
     :   macroName( _macroName ),
@@ -34,7 +37,7 @@ namespace Catch {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Catch::MessageBuilder::MessageBuilder( std::string const& macroName,
+    Catch::MessageBuilder::MessageBuilder( StringRef const& macroName,
                                            SourceLineInfo const& lineInfo,
                                            ResultWas::OfType type )
         :m_info(macroName, lineInfo, type) {}
@@ -49,18 +52,41 @@ namespace Catch {
         getResultCapture().pushScopedMessage( m_info );
     }
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4996) // std::uncaught_exception is deprecated in C++17
-#endif
     ScopedMessage::~ScopedMessage() {
-        if ( !std::uncaught_exception() ){
+        if ( !uncaught_exceptions() ){
             getResultCapture().popScopedMessage(m_info);
         }
     }
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif
 
+
+    Capturer::Capturer( StringRef macroName, SourceLineInfo const& lineInfo, ResultWas::OfType resultType, StringRef names ) {
+        auto start = std::string::npos;
+        for( size_t pos = 0; pos <= names.size(); ++pos ) {
+            char c = names[pos];
+            if( pos == names.size() || c == ' ' || c == '\t' || c == ',' || c == ']' ) {
+                if( start != std::string::npos ) {
+                    m_messages.push_back( MessageInfo( macroName, lineInfo, resultType ) );
+                    m_messages.back().message = names.substr( start, pos-start) + " := ";
+                    start = std::string::npos;
+                }
+            }
+            else if( c != '[' && c != ']' && start == std::string::npos )
+                start = pos;
+        }
+    }
+    Capturer::~Capturer() {
+        if ( !uncaught_exceptions() ){
+            assert( m_captured == m_messages.size() );
+            for( size_t i = 0; i < m_captured; ++i  )
+                m_resultCapture.popScopedMessage( m_messages[i] );
+        }
+    }
+
+    void Capturer::captureValue( size_t index, StringRef value ) {
+        assert( index < m_messages.size() );
+        m_messages[index].message += value;
+        m_resultCapture.pushScopedMessage( m_messages[index] );
+        m_captured++;
+    }
 
 } // end namespace Catch

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from  __future__ import print_function
+from __future__ import print_function
 
+import io
 import os
 import sys
 import subprocess
@@ -10,6 +11,10 @@ import difflib
 
 import scriptCommon
 from scriptCommon import catchPath
+
+if os.name == 'nt':
+    # Enable console colours on windows
+    os.system('')
 
 rootPath = os.path.join(catchPath, 'projects/SelfTest/Baselines')
 
@@ -50,6 +55,8 @@ infParser = re.compile(r'''
     |
     \(__builtin_inff\(\)\)                # Linux (ubuntu) INFINITY macro
     |
+    \(__builtin_inff\ \(\)\)              # Fedora INFINITY macro
+    |
     __builtin_huge_valf\(\)               # OSX macro
 ''', re.VERBOSE)
 nanParser = re.compile(r'''
@@ -70,10 +77,11 @@ else:
 
 overallResult = 0
 
+
 def diffFiles(fileA, fileB):
-    with open(fileA, 'r') as file:
+    with io.open(fileA, 'r', encoding='utf-8', errors='surrogateescape') as file:
         aLines = [line.rstrip() for line in file.readlines()]
-    with open(fileB, 'r') as file:
+    with io.open(fileB, 'r', encoding='utf-8', errors='surrogateescape') as file:
         bLines = [line.rstrip() for line in file.readlines()]
 
     shortenedFilenameA = fileA.rsplit(os.sep, 1)[-1]
@@ -83,13 +91,12 @@ def diffFiles(fileA, fileB):
     return [line for line in diff if line[0] in ('+', '-')]
 
 
-def filterLine(line):
+def filterLine(line, isCompact):
     if catchPath in line:
         # make paths relative to Catch root
         line = line.replace(catchPath + os.sep, '')
         # go from \ in windows paths to /
         line = line.replace('\\', '/')
-
 
     # strip source line numbers
     m = filelocParser.match(line)
@@ -100,6 +107,10 @@ def filterLine(line):
         line = filename + lnum + line[m.end():]
     else:
         line = lineNumberParser.sub(" ", line)
+
+    if isCompact:
+        line = line.replace(': FAILED', ': failed')
+        line = line.replace(': PASSED', ': passed')
 
     # strip Catch version number
     line = versionParser.sub("<version>", line)
@@ -137,10 +148,10 @@ def approve(baseName, args):
     subprocess.call(args, stdout=f, stderr=f)
     f.close()
 
-    rawFile = open(rawResultsPath, 'r')
-    filteredFile = open(filteredResultsPath, 'w')
+    rawFile = io.open(rawResultsPath, 'r', encoding='utf-8', errors='surrogateescape')
+    filteredFile = io.open(filteredResultsPath, 'w', encoding='utf-8', errors='surrogateescape')
     for line in rawFile:
-        filteredFile.write(filterLine(line).rstrip() + "\n")
+        filteredFile.write(filterLine(line, 'compact' in baseName).rstrip() + "\n")
     filteredFile.close()
     rawFile.close()
 
@@ -168,19 +179,19 @@ print("Running approvals against executable:")
 print("  " + cmdPath)
 
 
-### Keep default reporters here
+# ## Keep default reporters here ##
 # Standard console reporter
-approve("console.std", ["~[!nonportable]~[!benchmark]~[approvals]", "--order", "lex"])
+approve("console.std", ["~[!nonportable]~[!benchmark]~[approvals]", "--order", "lex", "--rng-seed", "0"])
 # console reporter, include passes, warn about No Assertions
-approve("console.sw", ["~[!nonportable]~[!benchmark]~[approvals]", "-s", "-w", "NoAssertions", "--order", "lex"])
+approve("console.sw", ["~[!nonportable]~[!benchmark]~[approvals]", "-s", "-w", "NoAssertions", "--order", "lex", "--rng-seed", "0"])
 # console reporter, include passes, warn about No Assertions, limit failures to first 4
-approve("console.swa4", ["~[!nonportable]~[!benchmark]~[approvals]", "-s", "-w", "NoAssertions", "-x", "4", "--order", "lex"])
+approve("console.swa4", ["~[!nonportable]~[!benchmark]~[approvals]", "-s", "-w", "NoAssertions", "-x", "4", "--order", "lex", "--rng-seed", "0"])
 # junit reporter, include passes, warn about No Assertions
-approve("junit.sw", ["~[!nonportable]~[!benchmark]~[approvals]", "-s", "-w", "NoAssertions", "-r", "junit", "--order", "lex"])
+approve("junit.sw", ["~[!nonportable]~[!benchmark]~[approvals]", "-s", "-w", "NoAssertions", "-r", "junit", "--order", "lex", "--rng-seed", "0"])
 # xml reporter, include passes, warn about No Assertions
-approve("xml.sw", ["~[!nonportable]~[!benchmark]~[approvals]", "-s", "-w", "NoAssertions", "-r", "xml", "--order", "lex"])
+approve("xml.sw", ["~[!nonportable]~[!benchmark]~[approvals]", "-s", "-w", "NoAssertions", "-r", "xml", "--order", "lex", "--rng-seed", "0"])
 # compact reporter, include passes, warn about No Assertions
-approve('compact.sw', ['~[!nonportable]~[!benchmark]~[approvals]', '-s', '-w', 'NoAssertions', '-r', 'compact', '--order', 'lex'])
+approve('compact.sw', ['~[!nonportable]~[!benchmark]~[approvals]', '-s', '-w', 'NoAssertions', '-r', 'compact', '--order', 'lex', "--rng-seed", "0"])
 
 if overallResult != 0:
     print("If these differences are expected, run approve.py to approve new baselines.")

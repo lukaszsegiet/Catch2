@@ -52,6 +52,90 @@ with expansion:
   0 == 0
 
 -------------------------------------------------------------------------------
+#1147
+-------------------------------------------------------------------------------
+Compilation.tests.cpp:<line number>
+...............................................................................
+
+Compilation.tests.cpp:<line number>:
+PASSED:
+  REQUIRE( t1 == t2 )
+with expansion:
+  {?} == {?}
+
+Compilation.tests.cpp:<line number>:
+PASSED:
+  REQUIRE( t1 != t2 )
+with expansion:
+  {?} != {?}
+
+Compilation.tests.cpp:<line number>:
+PASSED:
+  REQUIRE( t1 < t2 )
+with expansion:
+  {?} < {?}
+
+Compilation.tests.cpp:<line number>:
+PASSED:
+  REQUIRE( t1 > t2 )
+with expansion:
+  {?} > {?}
+
+Compilation.tests.cpp:<line number>:
+PASSED:
+  REQUIRE( t1 <= t2 )
+with expansion:
+  {?} <= {?}
+
+Compilation.tests.cpp:<line number>:
+PASSED:
+  REQUIRE( t1 >= t2 )
+with expansion:
+  {?} >= {?}
+
+-------------------------------------------------------------------------------
+#1175 - Hidden Test
+-------------------------------------------------------------------------------
+Misc.tests.cpp:<line number>
+...............................................................................
+
+Misc.tests.cpp:<line number>:
+PASSED:
+
+-------------------------------------------------------------------------------
+#1238
+-------------------------------------------------------------------------------
+Compilation.tests.cpp:<line number>
+...............................................................................
+
+Compilation.tests.cpp:<line number>:
+PASSED:
+  REQUIRE( std::memcmp(uarr, "123", sizeof(uarr)) == 0 )
+with expansion:
+  0 == 0
+with messages:
+  uarr := "123"
+  sarr := "456"
+
+Compilation.tests.cpp:<line number>:
+PASSED:
+  REQUIRE( std::memcmp(sarr, "456", sizeof(sarr)) == 0 )
+with expansion:
+  0 == 0
+with messages:
+  uarr := "123"
+  sarr := "456"
+
+-------------------------------------------------------------------------------
+#1245
+-------------------------------------------------------------------------------
+Compilation.tests.cpp:<line number>
+...............................................................................
+
+Compilation.tests.cpp:<line number>:
+PASSED:
+
+-------------------------------------------------------------------------------
 #748 - captures with unexpected exceptions
   outside assertions
 -------------------------------------------------------------------------------
@@ -257,6 +341,6 @@ with expansion:
   !true
 
 ===============================================================================
-test cases: 10 |  7 passed | 1 failed | 2 failed as expected
-assertions: 28 | 21 passed | 4 failed | 3 failed as expected
+test cases: 14 | 11 passed | 1 failed | 2 failed as expected
+assertions: 38 | 31 passed | 4 failed | 3 failed as expected
 

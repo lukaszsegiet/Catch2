@@ -6,8 +6,10 @@
  *  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
-#include "catch_assertionhandler.h"
 #include "catch_exception_translator_registry.h"
+#include "catch_assertionhandler.h"
+#include "catch_compiler_capabilities.h"
+#include "catch_enforce.h"
 
 #ifdef __OBJC__
 #import "Foundation/Foundation.h"
@@ -22,6 +24,7 @@ namespace Catch {
         m_translators.push_back( std::unique_ptr<const IExceptionTranslator>( translator ) );
     }
 
+#if !defined(CATCH_CONFIG_DISABLE_EXCEPTIONS)
     std::string ExceptionTranslatorRegistry::translateActiveException() const {
         try {
 #ifdef __OBJC__
@@ -33,6 +36,17 @@ namespace Catch {
                 return Catch::Detail::stringify( [exception description] );
             }
 #else
+            // Compiling a mixed mode project with MSVC means that CLR
+            // exceptions will be caught in (...) as well. However, these
+            // do not fill-in std::current_exception and thus lead to crash
+            // when attempting rethrow.
+            // /EHa switch also causes structured exceptions to be caught
+            // here, but they fill-in current_exception properly, so
+            // at worst the output should be a little weird, instead of
+            // causing a crash.
+            if (std::current_exception() == nullptr) {
+                return "Non C++ exception. Possibly a CLR exception.";
+            }
             return tryTranslators();
 #endif
         }
@@ -52,6 +66,13 @@ namespace Catch {
             return "Unknown exception";
         }
     }
+
+#else // ^^ Exceptions are enabled // Exceptions are disabled vv
+    std::string ExceptionTranslatorRegistry::translateActiveException() const {
+        CATCH_INTERNAL_ERROR("Attempted to translate active exception under CATCH_CONFIG_DISABLE_EXCEPTIONS!");
+    }
+#endif
+
 
     std::string ExceptionTranslatorRegistry::tryTranslators() const {
         if( m_translators.empty() )

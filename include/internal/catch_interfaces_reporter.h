@@ -42,6 +42,7 @@ namespace Catch {
 
     struct ReporterPreferences {
         bool shouldRedirectStdOut = false;
+        bool shouldReportAllAssertions = false;
     };
 
     template<typename T>
@@ -225,8 +226,6 @@ namespace Catch {
         virtual FactoryMap const& getFactories() const = 0;
         virtual Listeners const& getListeners() const = 0;
     };
-
-    void addReporter( IStreamingReporterPtr& existingReporter, IStreamingReporterPtr&& additionalReporter );
 
 } // end namespace Catch
 

@@ -67,12 +67,12 @@ TEST_CASE( "random SECTION tests", "[.][sections][failing]" ) {
     int a = 1;
     int b = 2;
 
-    SECTION( "s1", "doesn't equal" ) {
+    SECTION( "doesn't equal" ) {
         REQUIRE( a != b );
         REQUIRE( b != a );
     }
 
-    SECTION( "s2", "not equal" ) {
+    SECTION( "not equal" ) {
         REQUIRE( a != b);
     }
 }
@@ -81,11 +81,11 @@ TEST_CASE( "nested SECTION tests", "[.][sections][failing]" ) {
     int a = 1;
     int b = 2;
 
-    SECTION( "s1", "doesn't equal" ) {
+    SECTION( "doesn't equal" ) {
         REQUIRE( a != b );
         REQUIRE( b != a );
 
-        SECTION( "s2", "not equal" ) {
+        SECTION( "not equal" ) {
             REQUIRE( a != b);
         }
     }
@@ -95,15 +95,15 @@ TEST_CASE( "more nested SECTION tests", "[sections][failing][.]" ) {
     int a = 1;
     int b = 2;
 
-    SECTION( "s1", "doesn't equal" ) {
-        SECTION( "s2", "equal" ) {
+    SECTION( "doesn't equal" ) {
+        SECTION( "equal" ) {
             REQUIRE( a == b );
         }
 
-        SECTION( "s3", "not equal" ) {
+        SECTION( "not equal" ) {
             REQUIRE( a != b );
         }
-        SECTION( "s4", "less than" ) {
+        SECTION( "less than" ) {
             REQUIRE( a < b );
         }
     }
@@ -112,16 +112,16 @@ TEST_CASE( "more nested SECTION tests", "[sections][failing][.]" ) {
 TEST_CASE( "even more nested SECTION tests", "[sections]" ) {
     SECTION( "c" ) {
         SECTION( "d (leaf)" ) {
-            SUCCEED(""); // avoid failing due to no tests
+            SUCCEED(); // avoid failing due to no tests
         }
 
         SECTION( "e (leaf)" ) {
-            SUCCEED(""); // avoid failing due to no tests
+            SUCCEED(); // avoid failing due to no tests
         }
     }
 
     SECTION( "f (leaf)" ) {
-        SUCCEED(""); // avoid failing due to no tests
+        SUCCEED(); // avoid failing due to no tests
     }
 }
 
@@ -129,9 +129,7 @@ TEST_CASE( "looped SECTION tests", "[.][failing][sections]" ) {
     int a = 1;
 
     for( int b = 0; b < 10; ++b ) {
-        std::ostringstream oss;
-        oss << "b is currently: " << b;
-        SECTION( "s1", oss.str() ) {
+        DYNAMIC_SECTION( "b is currently: " << b ) {
             CHECK( b > a );
         }
     }
@@ -174,11 +172,11 @@ TEST_CASE( "checkedElse, failing", "[failing][.]" ) {
 }
 
 TEST_CASE( "xmlentitycheck" ) {
-    SECTION( "embedded xml", "<test>it should be possible to embed xml characters, such as <, \" or &, or even whole <xml>documents</xml> within an attribute</test>" ) {
-        SUCCEED(""); // We need this here to stop it failing due to no tests
+    SECTION( "embedded xml: <test>it should be possible to embed xml characters, such as <, \" or &, or even whole <xml>documents</xml> within an attribute</test>" ) {
+        SUCCEED(); // We need this here to stop it failing due to no tests
     }
-    SECTION( "encoded chars", "these should all be encoded: &&&\"\"\"<<<&\"<<&\"" ) {
-        SUCCEED(""); // We need this here to stop it failing due to no tests
+    SECTION( "encoded chars: these should all be encoded: &&&\"\"\"<<<&\"<<&\"" ) {
+        SUCCEED(); // We need this here to stop it failing due to no tests
     }
 }
 
@@ -265,8 +263,8 @@ TEST_CASE( "vectors can be sized and resized", "[vector]" ) {
 
 // https://github.com/philsquared/Catch/issues/166
 TEST_CASE("A couple of nested sections followed by a failure", "[failing][.]") {
-    SECTION("Outer", "")
-        SECTION("Inner", "")
+    SECTION("Outer")
+        SECTION("Inner")
             SUCCEED("that's not flying - that's failing in style");
 
     FAIL("to infinity and beyond");
@@ -274,7 +272,7 @@ TEST_CASE("A couple of nested sections followed by a failure", "[failing][.]") {
 
 TEST_CASE("not allowed", "[!throws]") {
     // This test case should not be included if you run with -e on the command line
-    SUCCEED( "" );
+    SUCCEED();
 }
 
 //TEST_CASE( "Is big endian" ) {
@@ -290,6 +288,7 @@ TEST_CASE( "Tabs and newlines show in output", "[.][whitespace][failing]" ) {
 }
 
 
+#ifdef CATCH_CONFIG_WCHAR
 TEST_CASE( "toString on const wchar_t const pointer returns the string contents", "[toString]" ) {
         const wchar_t * const s = L"wide load";
         std::string result = ::Catch::Detail::stringify( s );
@@ -303,7 +302,7 @@ TEST_CASE( "toString on const wchar_t pointer returns the string contents", "[to
 }
 
 TEST_CASE( "toString on wchar_t const pointer returns the string contents", "[toString]" ) {
-        auto const s = const_cast<wchar_t* const>( L"wide load" );
+        auto const s = const_cast<wchar_t*>( L"wide load" );
         std::string result = ::Catch::Detail::stringify( s );
         CHECK( result == "\"wide load\"" );
 }
@@ -313,6 +312,7 @@ TEST_CASE( "toString on wchar_t returns the string contents", "[toString]" ) {
         std::string result = ::Catch::Detail::stringify( s );
         CHECK( result == "\"wide load\"" );
 }
+#endif
 
 TEST_CASE( "long long" ) {
     long long l = std::numeric_limits<long long>::max();
@@ -346,6 +346,11 @@ TEST_CASE( "#961 -- Dynamically created sections should all be reported", "[.]" 
             SUCCEED( "Everything is OK" );
         }
     }
+}
+
+TEST_CASE( "#1175 - Hidden Test", "[.]" ) {
+  // Just for checking that hidden test is not listed by default
+  SUCCEED();
 }
 
 }} // namespace MiscTests
