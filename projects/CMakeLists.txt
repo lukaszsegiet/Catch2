@@ -118,11 +118,14 @@ set(INTERNAL_HEADERS
         ${HEADER_DIR}/internal/catch_matchers_string.h
         ${HEADER_DIR}/internal/catch_matchers_vector.h
         ${HEADER_DIR}/internal/catch_message.h
+        ${HEADER_DIR}/internal/catch_meta.hpp
         ${HEADER_DIR}/internal/catch_objc.hpp
         ${HEADER_DIR}/internal/catch_objc_arc.hpp
         ${HEADER_DIR}/internal/catch_option.hpp
         ${HEADER_DIR}/internal/catch_output_redirect.h
         ${HEADER_DIR}/internal/catch_platform.h
+        ${HEADER_DIR}/internal/catch_polyfills.hpp
+        ${HEADER_DIR}/internal/catch_preprocessor.hpp
         ${HEADER_DIR}/internal/catch_random_number_generator.h
         ${HEADER_DIR}/internal/catch_reenable_warnings.h
         ${HEADER_DIR}/internal/catch_reporter_registrars.hpp
@@ -153,6 +156,7 @@ set(INTERNAL_HEADERS
         ${HEADER_DIR}/internal/catch_to_string.hpp
         ${HEADER_DIR}/internal/catch_tostring.h
         ${HEADER_DIR}/internal/catch_totals.h
+        ${HEADER_DIR}/internal/catch_type_traits.hpp
         ${HEADER_DIR}/internal/catch_uncaught_exceptions.h
         ${HEADER_DIR}/internal/catch_user_interfaces.h
         ${HEADER_DIR}/internal/catch_version.h
@@ -196,6 +200,7 @@ set(IMPL_SOURCES
         ${HEADER_DIR}/internal/catch_output_redirect.cpp
         ${HEADER_DIR}/internal/catch_registry_hub.cpp
         ${HEADER_DIR}/internal/catch_interfaces_reporter.cpp
+        ${HEADER_DIR}/internal/catch_polyfills.cpp
         ${HEADER_DIR}/internal/catch_random_number_generator.cpp
         ${HEADER_DIR}/internal/catch_reporter_registry.cpp
         ${HEADER_DIR}/internal/catch_result_type.cpp
@@ -303,7 +308,7 @@ if ( CMAKE_CXX_COMPILER_ID MATCHES "Clang" )
 endif()
 if ( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
     STRING(REGEX REPLACE "/W[0-9]" "/W4" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}) # override default warning level
-    target_compile_options( SelfTest PRIVATE /w44265 /w44061 /w44062 )
+    target_compile_options( SelfTest PRIVATE /w44265 /w44061 /w44062 /w45038 )
     if (CATCH_ENABLE_WERROR)
         target_compile_options( SelfTest PRIVATE /WX)
     endif()
@@ -340,9 +345,15 @@ set_tests_properties(NoAssertions PROPERTIES PASS_REGULAR_EXPRESSION "No asserti
 add_test(NAME NoTest COMMAND $<TARGET_FILE:SelfTest> -w NoTests "___nonexistent_test___")
 set_tests_properties(NoTest PROPERTIES PASS_REGULAR_EXPRESSION "No test cases matched")
 
+add_test(NAME FilteredSection-1 COMMAND $<TARGET_FILE:SelfTest> \#1394 -c RunSection)
+set_tests_properties(FilteredSection-1 PROPERTIES FAIL_REGULAR_EXPRESSION "No tests ran")
+add_test(NAME FilteredSection-2 COMMAND $<TARGET_FILE:SelfTest> \#1394\ nested -c NestedRunSection -c s1)
+set_tests_properties(FilteredSection-2 PROPERTIES FAIL_REGULAR_EXPRESSION "No tests ran")
+
 # AppVeyor has a Python 2.7 in path, but doesn't have .py files as autorunnable
 add_test(NAME ApprovalTests COMMAND ${PYTHON_EXECUTABLE} ${CATCH_DIR}/scripts/approvalTests.py $<TARGET_FILE:SelfTest>)
 set_tests_properties(ApprovalTests PROPERTIES FAIL_REGULAR_EXPRESSION "Results differed")
+
 
 if (CATCH_USE_VALGRIND)
     add_test(NAME ValgrindRunTests COMMAND valgrind --leak-check=full --error-exitcode=1 $<TARGET_FILE:SelfTest>)
