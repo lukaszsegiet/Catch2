@@ -213,6 +213,16 @@ namespace { namespace MatchersTests {
             v2.push_back(1);
             v2.push_back(2);
 
+            std::vector<double> v3;
+            v3.push_back(1);
+            v3.push_back(2);
+            v3.push_back(3);
+
+            std::vector<double> v4;
+            v4.push_back(1 + 1e-8);
+            v4.push_back(2 + 1e-8);
+            v4.push_back(3 + 1e-8);
+
             std::vector<int> empty;
 
             SECTION("Contains (element)") {
@@ -264,6 +274,16 @@ namespace { namespace MatchersTests {
             std::vector<int> v2;
             v2.push_back(1);
             v2.push_back(2);
+
+            std::vector<double> v3;
+            v3.push_back(1);
+            v3.push_back(2);
+            v3.push_back(3);
+
+            std::vector<double> v4;
+            v4.push_back(1.1);
+            v4.push_back(2.1);
+            v4.push_back(3.1);
 
             std::vector<int> empty;
 
@@ -327,7 +347,6 @@ namespace { namespace MatchersTests {
                 REQUIRE_THAT(0.f, !WithinAbs(1.f, 0.99f));
 
                 REQUIRE_THAT(0.f, WithinAbs(-0.f, 0));
-                REQUIRE_THAT(NAN, !WithinAbs(NAN, 0));
 
                 REQUIRE_THAT(11.f, !WithinAbs(10.f, 0.5f));
                 REQUIRE_THAT(10.f, !WithinAbs(11.f, 0.5f));
@@ -343,14 +362,10 @@ namespace { namespace MatchersTests {
 
                 REQUIRE_THAT(1.f, WithinULP(1.f, 0));
                 REQUIRE_THAT(-0.f, WithinULP(0.f, 0));
-
-                REQUIRE_THAT(NAN, !WithinULP(NAN, 123));
             }
             SECTION("Composed") {
                 REQUIRE_THAT(1.f, WithinAbs(1.f, 0.5) || WithinULP(1.f, 1));
                 REQUIRE_THAT(1.f, WithinAbs(2.f, 0.5) || WithinULP(1.f, 0));
-
-                REQUIRE_THAT(NAN, !(WithinAbs(NAN, 100) || WithinULP(NAN, 123)));
             }
             SECTION("Constructor validation") {
                 REQUIRE_NOTHROW(WithinAbs(1.f, 0.f));
@@ -369,8 +384,6 @@ namespace { namespace MatchersTests {
                 REQUIRE_THAT(0., !WithinAbs(1., 0.99));
                 REQUIRE_THAT(0., !WithinAbs(1., 0.99));
 
-                REQUIRE_THAT(NAN, !WithinAbs(NAN, 0));
-
                 REQUIRE_THAT(11., !WithinAbs(10., 0.5));
                 REQUIRE_THAT(10., !WithinAbs(11., 0.5));
                 REQUIRE_THAT(-10., WithinAbs(-10., 0.5));
@@ -385,14 +398,10 @@ namespace { namespace MatchersTests {
 
                 REQUIRE_THAT(1., WithinULP(1., 0));
                 REQUIRE_THAT(-0., WithinULP(0., 0));
-
-                REQUIRE_THAT(NAN, !WithinULP(NAN, 123));
             }
             SECTION("Composed") {
                 REQUIRE_THAT(1., WithinAbs(1., 0.5) || WithinULP(2., 1));
                 REQUIRE_THAT(1., WithinAbs(2., 0.5) || WithinULP(1., 0));
-
-                REQUIRE_THAT(NAN, !(WithinAbs(NAN, 100) || WithinULP(NAN, 123)));
             }
             SECTION("Constructor validation") {
                 REQUIRE_NOTHROW(WithinAbs(1., 0.));
@@ -401,6 +410,12 @@ namespace { namespace MatchersTests {
                 REQUIRE_NOTHROW(WithinULP(1., 0));
                 REQUIRE_THROWS_AS(WithinULP(1., -1), std::domain_error);
             }
+        }
+
+        TEST_CASE("Floating point matchers that are problematic in approvals", "[approvals][matchers][floating-point]") {
+            REQUIRE_THAT(NAN, !WithinAbs(NAN, 0));
+            REQUIRE_THAT(NAN, !(WithinAbs(NAN, 100) || WithinULP(NAN, 123)));
+            REQUIRE_THAT(NAN, !WithinULP(NAN, 123));
         }
 
         TEST_CASE("Arbitrary predicate matcher", "[matchers][generic]") {
@@ -434,6 +449,44 @@ namespace { namespace MatchersTests {
 
         TEST_CASE("Predicate matcher can accept const char*", "[matchers][compilation]") {
             REQUIRE_THAT("foo", Predicate<const char*>([] (const char* const&) { return true; }));
+        }
+
+        TEST_CASE("Vector Approx matcher", "[matchers][approx][vector]") {
+            using Catch::Matchers::Approx;
+            SECTION("Empty vector is roughly equal to an empty vector") {
+                std::vector<double> empty;
+                REQUIRE_THAT(empty, Approx(empty));
+            }
+            SECTION("Vectors with elements") {
+                std::vector<double> v1({1., 2., 3.});
+                SECTION("A vector is approx equal to itself") {
+                    REQUIRE_THAT(v1, Approx(v1));
+                }
+                std::vector<double> v2({1.5, 2.5, 3.5});
+                SECTION("Different length") {
+                    auto temp(v1);
+                    temp.push_back(4);
+                    REQUIRE_THAT(v1, !Approx(temp));
+                }
+                SECTION("Same length, different elements") {
+                    REQUIRE_THAT(v1, !Approx(v2));
+                    REQUIRE_THAT(v1, Approx(v2).margin(0.5));
+                    REQUIRE_THAT(v1, Approx(v2).epsilon(0.5));
+                    REQUIRE_THAT(v1, Approx(v2).epsilon(0.1).scale(500));
+                }
+            }
+        }
+
+        TEST_CASE("Vector Approx matcher -- failing", "[matchers][approx][vector][.failing]") {
+            using Catch::Matchers::Approx;
+            SECTION("Empty and non empty vectors are not approx equal") {
+                std::vector<double> empty, t1({1, 2});
+                CHECK_THAT(empty, Approx(t1));
+            }
+            SECTION("Just different vectors") {
+                std::vector<double> v1({2., 4., 6.}), v2({1., 3., 5.});
+                CHECK_THAT(v1, Approx(v2));
+            }
         }
 
 } } // namespace MatchersTests

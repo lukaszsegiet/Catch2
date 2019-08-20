@@ -45,7 +45,16 @@ Each of the provided `std::string` matchers also takes an optional second argume
 
 
 ### Vector matchers
-The vector matchers are `Contains`, `VectorContains` and `Equals`. `VectorContains` looks for a single element in the matched vector, `Contains` looks for a set (vector) of elements inside the matched vector.
+Catch2 currently provides 5 built-in matchers that work on `std::vector`.
+These are
+
+ * `Contains` which checks whether a specified vector is present in the result
+ * `VectorContains` which checks whether a specified element is present in the result
+ * `Equals` which checks whether the result is exactly equal (order matters) to a specific vector
+ * `UnorderedEquals` which checks whether the result is equal to a specific vector under a permutation
+ * `Approx` which checks whether the result is "approx-equal" (order matters, but comparison is done via `Approx`) to a specific vector
+> Approx matcher was [introduced](https://github.com/catchorg/Catch2/issues/1499) in Catch 2.7.2.
+
 
 ### Floating point matchers
 The floating point matchers are `WithinULP` and `WithinAbs`. `WithinAbs` accepts floating point numbers that are within a certain margin of target. `WithinULP` performs an [ULP](https://en.wikipedia.org/wiki/Unit_in_the_last_place)-based comparison of two floating point numbers and accepts them if they are less than certain number of ULPs apart.
@@ -92,7 +101,7 @@ public:
     IntRange( int begin, int end ) : m_begin( begin ), m_end( end ) {}
 
     // Performs the test for this matcher
-    virtual bool match( int const& i ) const override {
+    bool match( int const& i ) const override {
         return i >= m_begin && i <= m_end;
     }
 
@@ -100,7 +109,7 @@ public:
     // include any provided data (the begin/ end in this case) and
     // be written as if it were stating a fact (in the output it will be
     // preceded by the value under test).
-    virtual std::string describe() const {
+    virtual std::string describe() const override {
         std::ostringstream ss;
         ss << "is between " << m_begin << " and " << m_end;
         return ss.str();

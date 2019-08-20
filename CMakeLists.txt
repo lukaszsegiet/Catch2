@@ -6,7 +6,11 @@ if(NOT DEFINED PROJECT_NAME)
   set(NOT_SUBPROJECT ON)
 endif()
 
-project(Catch2 LANGUAGES CXX VERSION 2.5.0)
+project(Catch2 LANGUAGES CXX VERSION 2.9.2)
+
+if (CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
+    message(FATAL_ERROR "Building in-source is not supported! Create a build dir and remove ${CMAKE_SOURCE_DIR}/CMakeCache.txt")
+endif()
 
 # Provide path for scripts
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/CMake")
@@ -88,6 +92,10 @@ target_include_directories(Catch2
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
+if (ANDROID)
+    target_link_libraries(Catch2 INTERFACE log)
+endif()
+
 # provide a namespaced alias for clients to 'link' against if catch is included as a sub-project
 add_library(Catch2::Catch2 ALIAS Catch2)
 
@@ -132,9 +140,11 @@ if (NOT_SUBPROJECT)
     #
     # CMake does not provide a direct customization point for this in
     # `write_basic_package_version_file`, but it can be accomplished
-    # indirectly by temporarily undefining `CMAKE_SIZEOF_VOID_P`.
+    # indirectly by temporarily redefining `CMAKE_SIZEOF_VOID_P` to an
+    # empty string. Note that just undefining the variable could be
+    # insufficient in cases where the variable was already in CMake cache
     set(CATCH2_CMAKE_SIZEOF_VOID_P ${CMAKE_SIZEOF_VOID_P})
-    unset(CMAKE_SIZEOF_VOID_P)
+    set(CMAKE_SIZEOF_VOID_P "")
     write_basic_package_version_file(
       "${CMAKE_CURRENT_BINARY_DIR}/Catch2ConfigVersion.cmake"
       COMPATIBILITY
@@ -204,5 +214,16 @@ if (NOT_SUBPROJECT)
       DESTINATION
         ${PKGCONFIG_INSTALL_DIR}
     )
+
+    # CPack/CMake started taking the package version from project version 3.12
+    # So we need to set the version manually for older CMake versions
+    if(${CMAKE_VERSION} VERSION_LESS "3.12.0")
+        set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+    endif()
+
+    set(CPACK_PACKAGE_CONTACT "https://github.com/catchorg/Catch2/")
+
+
+    include( CPack )
 
 endif(NOT_SUBPROJECT)

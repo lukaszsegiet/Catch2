@@ -17,11 +17,14 @@ endif(MSVC) #Temporary workaround
 set(TEST_SOURCES
         ${SELF_TEST_DIR}/TestMain.cpp
         ${SELF_TEST_DIR}/IntrospectiveTests/CmdLine.tests.cpp
+        ${SELF_TEST_DIR}/IntrospectiveTests/Details.tests.cpp
         ${SELF_TEST_DIR}/IntrospectiveTests/GeneratorsImpl.tests.cpp
+        ${SELF_TEST_DIR}/IntrospectiveTests/InternalBenchmark.tests.cpp
         ${SELF_TEST_DIR}/IntrospectiveTests/PartTracker.tests.cpp
-        ${SELF_TEST_DIR}/IntrospectiveTests/TagAlias.tests.cpp
+        ${SELF_TEST_DIR}/IntrospectiveTests/Tag.tests.cpp
         ${SELF_TEST_DIR}/IntrospectiveTests/String.tests.cpp
         ${SELF_TEST_DIR}/IntrospectiveTests/Xml.tests.cpp
+        ${SELF_TEST_DIR}/IntrospectiveTests/ToString.tests.cpp
         ${SELF_TEST_DIR}/UsageTests/Approx.tests.cpp
         ${SELF_TEST_DIR}/UsageTests/BDD.tests.cpp
         ${SELF_TEST_DIR}/UsageTests/Benchmark.tests.cpp
@@ -34,8 +37,10 @@ set(TEST_SOURCES
         ${SELF_TEST_DIR}/UsageTests/Generators.tests.cpp
         ${SELF_TEST_DIR}/UsageTests/Message.tests.cpp
         ${SELF_TEST_DIR}/UsageTests/Misc.tests.cpp
+        ${SELF_TEST_DIR}/UsageTests/ToStringByte.tests.cpp
         ${SELF_TEST_DIR}/UsageTests/ToStringChrono.tests.cpp
         ${SELF_TEST_DIR}/UsageTests/ToStringGeneral.tests.cpp
+        ${SELF_TEST_DIR}/UsageTests/ToStringOptional.tests.cpp
         ${SELF_TEST_DIR}/UsageTests/ToStringPair.tests.cpp
         ${SELF_TEST_DIR}/UsageTests/ToStringTuple.tests.cpp
         ${SELF_TEST_DIR}/UsageTests/ToStringVariant.tests.cpp
@@ -77,6 +82,33 @@ CheckFileList(EXTERNAL_HEADERS ${HEADER_DIR}/external)
 
 
 # Please keep these ordered alphabetically
+set(BENCHMARK_HEADERS
+		${HEADER_DIR}/internal/benchmark/catch_benchmark.hpp
+        ${HEADER_DIR}/internal/benchmark/catch_chronometer.hpp
+        ${HEADER_DIR}/internal/benchmark/catch_clock.hpp
+        ${HEADER_DIR}/internal/benchmark/catch_constructor.hpp
+        ${HEADER_DIR}/internal/benchmark/catch_environment.hpp
+        ${HEADER_DIR}/internal/benchmark/catch_estimate.hpp
+        ${HEADER_DIR}/internal/benchmark/catch_execution_plan.hpp
+        ${HEADER_DIR}/internal/benchmark/catch_optimizer.hpp
+        ${HEADER_DIR}/internal/benchmark/catch_outlier_classification.hpp
+        ${HEADER_DIR}/internal/benchmark/catch_sample_analysis.hpp
+        ${HEADER_DIR}/internal/benchmark/detail/catch_analyse.hpp
+        ${HEADER_DIR}/internal/benchmark/detail/catch_benchmark_function.hpp
+        ${HEADER_DIR}/internal/benchmark/detail/catch_complete_invoke.hpp
+        ${HEADER_DIR}/internal/benchmark/detail/catch_estimate_clock.hpp
+        ${HEADER_DIR}/internal/benchmark/detail/catch_measure.hpp
+        ${HEADER_DIR}/internal/benchmark/detail/catch_repeat.hpp
+        ${HEADER_DIR}/internal/benchmark/detail/catch_run_for_at_least.hpp
+        ${HEADER_DIR}/internal/benchmark/detail/catch_stats.hpp
+        ${HEADER_DIR}/internal/benchmark/detail/catch_timing.hpp
+)
+set(BENCHMARK_SOURCES
+    ${HEADER_DIR}/internal/benchmark/detail/catch_stats.cpp
+)
+
+SOURCE_GROUP("benchmark" FILES ${BENCHMARK_HEADERS} ${BENCHMARK_SOURCES})
+
 set(INTERNAL_HEADERS
         ${HEADER_DIR}/internal/catch_approx.h
         ${HEADER_DIR}/internal/catch_assertionhandler.h
@@ -96,14 +128,18 @@ set(INTERNAL_HEADERS
         ${HEADER_DIR}/internal/catch_decomposer.h
         ${HEADER_DIR}/internal/catch_default_main.hpp
         ${HEADER_DIR}/internal/catch_enforce.h
+        ${HEADER_DIR}/internal/catch_enum_values_registry.h
         ${HEADER_DIR}/internal/catch_errno_guard.h
         ${HEADER_DIR}/internal/catch_exception_translator_registry.h
         ${HEADER_DIR}/internal/catch_external_interfaces.h
         ${HEADER_DIR}/internal/catch_fatal_condition.h
         ${HEADER_DIR}/internal/catch_generators.hpp
+        ${HEADER_DIR}/internal/catch_generators_generic.hpp
+        ${HEADER_DIR}/internal/catch_generators_specific.hpp
         ${HEADER_DIR}/internal/catch_impl.hpp
         ${HEADER_DIR}/internal/catch_interfaces_capture.h
         ${HEADER_DIR}/internal/catch_interfaces_config.h
+        ${HEADER_DIR}/internal/catch_interfaces_enum_values_registry.h
         ${HEADER_DIR}/internal/catch_interfaces_exception.h
         ${HEADER_DIR}/internal/catch_interfaces_registry_hub.h
         ${HEADER_DIR}/internal/catch_interfaces_reporter.h
@@ -132,7 +168,6 @@ set(INTERNAL_HEADERS
         ${HEADER_DIR}/internal/catch_reporter_registry.h
         ${HEADER_DIR}/internal/catch_result_type.h
         ${HEADER_DIR}/internal/catch_run_context.h
-        ${HEADER_DIR}/internal/catch_benchmark.h
         ${HEADER_DIR}/internal/catch_section.h
         ${HEADER_DIR}/internal/catch_section_info.h
         ${HEADER_DIR}/internal/catch_session.h
@@ -168,7 +203,6 @@ set(IMPL_SOURCES
         ${HEADER_DIR}/internal/catch_approx.cpp
         ${HEADER_DIR}/internal/catch_assertionhandler.cpp
         ${HEADER_DIR}/internal/catch_assertionresult.cpp
-        ${HEADER_DIR}/internal/catch_benchmark.cpp
         ${HEADER_DIR}/internal/catch_capture_matchers.cpp
         ${HEADER_DIR}/internal/catch_commandline.cpp
         ${HEADER_DIR}/internal/catch_common.cpp
@@ -179,6 +213,7 @@ set(IMPL_SOURCES
         ${HEADER_DIR}/internal/catch_debugger.cpp
         ${HEADER_DIR}/internal/catch_decomposer.cpp
         ${HEADER_DIR}/internal/catch_enforce.cpp
+        ${HEADER_DIR}/internal/catch_enum_values_registry.cpp
         ${HEADER_DIR}/internal/catch_errno_guard.cpp
         ${HEADER_DIR}/internal/catch_exception_translator_registry.cpp
         ${HEADER_DIR}/internal/catch_fatal_condition.cpp
@@ -262,7 +297,9 @@ set(HEADERS
         ${EXTERNAL_HEADERS}
         ${INTERNAL_HEADERS}
         ${REPORTER_HEADERS}
-        )
+		${BENCHMARK_HEADERS}
+        ${BENCHMARK_SOURCES}
+)
 
 # Provide some groupings for IDEs
 SOURCE_GROUP("Tests" FILES ${TEST_SOURCES})
@@ -273,19 +310,31 @@ include(CTest)
 add_executable(SelfTest ${TEST_SOURCES} ${IMPL_SOURCES} ${REPORTER_SOURCES} ${SURROGATE_SOURCES} ${HEADERS})
 target_include_directories(SelfTest PRIVATE ${HEADER_DIR})
 
-if(USE_CPP17)
-    message(STATUS "Enabling C++17")
-    set_property(TARGET SelfTest PROPERTY CXX_STANDARD 17)
-elseif(USE_CPP14)
-    message(STATUS "Enabling C++14")
-    set_property(TARGET SelfTest PROPERTY CXX_STANDARD 14)
-else()
-    message(STATUS "Enabling C++11")
-    set_property(TARGET SelfTest PROPERTY CXX_STANDARD 11)
-endif()
+# It took CMake until 3.8 to abandon the doomed approach of enumerating
+# required features so we just list C++11 features to support older ones.
+target_compile_features(SelfTest
+  PRIVATE
+    cxx_alignas
+    cxx_alignof
+    cxx_attributes
+    cxx_auto_type
+    cxx_constexpr
+    cxx_defaulted_functions
+    cxx_deleted_functions
+    cxx_final
+    cxx_lambdas
+    cxx_noexcept
+    cxx_override
+    cxx_range_for
+    cxx_rvalue_references
+    cxx_static_assert
+    cxx_strong_enums
+    cxx_trailing_return_types
+    cxx_unicode_literals
+    cxx_user_literals
+    cxx_variadic_macros
+)
 
-set_property(TARGET SelfTest PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET SelfTest PROPERTY CXX_EXTENSIONS OFF)
 
 if (CATCH_ENABLE_COVERAGE)
     set(ENABLE_COVERAGE ON CACHE BOOL "Enable coverage build." FORCE)
@@ -299,7 +348,7 @@ endif()
 if ( CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang|GNU" )
     target_compile_options( SelfTest PRIVATE -Wall -Wextra -Wunreachable-code -Wpedantic -Wmissing-declarations )
     if (CATCH_ENABLE_WERROR)
-        target_compile_options( SelfTest PRIVATE -Werror)
+        target_compile_options( SelfTest PRIVATE -Werror )
     endif()
 endif()
 # Clang specific options go here
@@ -319,6 +368,9 @@ endif()
 
 # configure unit tests via CTest
 add_test(NAME RunTests COMMAND $<TARGET_FILE:SelfTest>)
+set_tests_properties(RunTests PROPERTIES
+    FAIL_REGULAR_EXPRESSION "Filters:"
+)
 
 add_test(NAME ListTests COMMAND $<TARGET_FILE:SelfTest> --list-tests --verbosity high)
 set_tests_properties(ListTests PROPERTIES 
@@ -342,8 +394,19 @@ set_tests_properties(ListTestNamesOnly PROPERTIES
 add_test(NAME NoAssertions COMMAND $<TARGET_FILE:SelfTest> -w NoAssertions)
 set_tests_properties(NoAssertions PROPERTIES PASS_REGULAR_EXPRESSION "No assertions in test case")
 
-add_test(NAME NoTest COMMAND $<TARGET_FILE:SelfTest> -w NoTests "___nonexistent_test___")
-set_tests_properties(NoTest PROPERTIES PASS_REGULAR_EXPRESSION "No test cases matched")
+add_test(NAME NoTest COMMAND $<TARGET_FILE:SelfTest> Tracker, "___nonexistent_test___")
+set_tests_properties(NoTest PROPERTIES
+    PASS_REGULAR_EXPRESSION "No test cases matched '___nonexistent_test___'"
+    FAIL_REGULAR_EXPRESSION "No tests ran"
+)
+
+add_test(NAME WarnAboutNoTests COMMAND ${CMAKE_COMMAND} -P ${CATCH_DIR}/projects/SelfTest/WarnAboutNoTests.cmake $<TARGET_FILE:SelfTest>)
+
+add_test(NAME UnmatchedOutputFilter COMMAND $<TARGET_FILE:SelfTest> [this-tag-does-not-exist] -w NoTests)
+set_tests_properties(UnmatchedOutputFilter
+  PROPERTIES
+    PASS_REGULAR_EXPRESSION "No test cases matched '\\[this-tag-does-not-exist\\]'"
+)
 
 add_test(NAME FilteredSection-1 COMMAND $<TARGET_FILE:SelfTest> \#1394 -c RunSection)
 set_tests_properties(FilteredSection-1 PROPERTIES FAIL_REGULAR_EXPRESSION "No tests ran")
@@ -353,6 +416,12 @@ set_tests_properties(FilteredSection-2 PROPERTIES FAIL_REGULAR_EXPRESSION "No te
 # AppVeyor has a Python 2.7 in path, but doesn't have .py files as autorunnable
 add_test(NAME ApprovalTests COMMAND ${PYTHON_EXECUTABLE} ${CATCH_DIR}/scripts/approvalTests.py $<TARGET_FILE:SelfTest>)
 set_tests_properties(ApprovalTests PROPERTIES FAIL_REGULAR_EXPRESSION "Results differed")
+
+add_test(NAME RegressionCheck-1670 COMMAND $<TARGET_FILE:SelfTest> "#1670 regression check" -c A -r compact)
+set_tests_properties(RegressionCheck-1670 PROPERTIES PASS_REGULAR_EXPRESSION "Passed 1 test case with 2 assertions.")
+
+add_test(NAME VersionCheck COMMAND $<TARGET_FILE:SelfTest> -h)
+set_tests_properties(VersionCheck PROPERTIES PASS_REGULAR_EXPRESSION "Catch v${PROJECT_VERSION}")
 
 
 if (CATCH_USE_VALGRIND)

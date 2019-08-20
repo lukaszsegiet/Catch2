@@ -3,6 +3,8 @@ Decomposition.tests.cpp:<line number>: passed: fptr == 0 for: 0 == 0
 Decomposition.tests.cpp:<line number>: passed: fptr == 0l for: 0 == 0
 Compilation.tests.cpp:<line number>: passed: y.v == 0 for: 0 == 0
 Compilation.tests.cpp:<line number>: passed: 0 == y.v for: 0 == 0
+Compilation.tests.cpp:<line number>: passed: y.v == 0 for: 0 == 0
+Compilation.tests.cpp:<line number>: passed: 0 == y.v for: 0 == 0
 Compilation.tests.cpp:<line number>: passed: t1 == t2 for: {?} == {?}
 Compilation.tests.cpp:<line number>: passed: t1 != t2 for: {?} != {?}
 Compilation.tests.cpp:<line number>: passed: t1 < t2 for: {?} < {?}
@@ -14,6 +16,13 @@ Compilation.tests.cpp:<line number>: passed: std::memcmp(uarr, "123", sizeof(uar
 Compilation.tests.cpp:<line number>: passed: std::memcmp(sarr, "456", sizeof(sarr)) == 0 for: 0 == 0 with 2 messages: 'uarr := "123"' and 'sarr := "456"'
 Compilation.tests.cpp:<line number>: passed:
 Compilation.tests.cpp:<line number>: passed: h1 == h2 for: [1403 helper] == [1403 helper]
+Message.tests.cpp:<line number>: warning: '
+This info message starts with a linebreak' with 1 message: '
+This warning message starts with a linebreak'
+This would not be caught previously
+Nor would this
+Tricky.tests.cpp:<line number>: failed: explicitly with 1 message: '1514'
+Compilation.tests.cpp:<line number>: passed: std::is_same<TypeList<int>, TypeList<int>>::value for: true
 Exception.tests.cpp:<line number>: failed: unexpected exception with message: 'answer := 42' with 1 message: 'expected exception'
 Exception.tests.cpp:<line number>: failed: unexpected exception with message: 'answer := 42'; expression was: thisThrows() with 1 message: 'expected exception'
 Exception.tests.cpp:<line number>: passed: thisThrows() with 1 message: 'answer := 42'
@@ -57,106 +66,87 @@ Tricky.tests.cpp:<line number>: passed: !is_true<false>::value for: true
 Tricky.tests.cpp:<line number>: passed: !!is_true<true>::value for: true
 Tricky.tests.cpp:<line number>: passed: is_true<true>::value for: true
 Tricky.tests.cpp:<line number>: passed: !(is_true<false>::value) for: !false
-Generators.tests.cpp:<line number>: passed: x < y for: 1 < 101
-Generators.tests.cpp:<line number>: passed: x < y for: 1 < 102
-Generators.tests.cpp:<line number>: passed: x < y for: 1 < 103
-Generators.tests.cpp:<line number>: passed: x < y for: 1 < 104
-Generators.tests.cpp:<line number>: passed: x < y for: 1 < 105
-Generators.tests.cpp:<line number>: passed: x < y for: 1 < 106
-Generators.tests.cpp:<line number>: passed: x < y for: 1 < 107
-Generators.tests.cpp:<line number>: passed: x < y for: 1 < 108
-Generators.tests.cpp:<line number>: passed: x < y for: 1 < 109
-Generators.tests.cpp:<line number>: passed: x < y for: 1 < 110
-Generators.tests.cpp:<line number>: passed: x < y for: 2 < 101
-Generators.tests.cpp:<line number>: passed: x < y for: 2 < 102
-Generators.tests.cpp:<line number>: passed: x < y for: 2 < 103
-Generators.tests.cpp:<line number>: passed: x < y for: 2 < 104
-Generators.tests.cpp:<line number>: passed: x < y for: 2 < 105
-Generators.tests.cpp:<line number>: passed: x < y for: 2 < 106
-Generators.tests.cpp:<line number>: passed: x < y for: 2 < 107
-Generators.tests.cpp:<line number>: passed: x < y for: 2 < 108
-Generators.tests.cpp:<line number>: passed: x < y for: 2 < 109
-Generators.tests.cpp:<line number>: passed: x < y for: 2 < 110
-Generators.tests.cpp:<line number>: passed: x < y for: 3 < 101
-Generators.tests.cpp:<line number>: passed: x < y for: 3 < 102
-Generators.tests.cpp:<line number>: passed: x < y for: 3 < 103
-Generators.tests.cpp:<line number>: passed: x < y for: 3 < 104
-Generators.tests.cpp:<line number>: passed: x < y for: 3 < 105
-Generators.tests.cpp:<line number>: passed: x < y for: 3 < 106
-Generators.tests.cpp:<line number>: passed: x < y for: 3 < 107
-Generators.tests.cpp:<line number>: passed: x < y for: 3 < 108
-Generators.tests.cpp:<line number>: passed: x < y for: 3 < 109
-Generators.tests.cpp:<line number>: passed: x < y for: 3 < 110
-Generators.tests.cpp:<line number>: passed: x < y for: 4 < 101
-Generators.tests.cpp:<line number>: passed: x < y for: 4 < 102
-Generators.tests.cpp:<line number>: passed: x < y for: 4 < 103
-Generators.tests.cpp:<line number>: passed: x < y for: 4 < 104
-Generators.tests.cpp:<line number>: passed: x < y for: 4 < 105
-Generators.tests.cpp:<line number>: passed: x < y for: 4 < 106
-Generators.tests.cpp:<line number>: passed: x < y for: 4 < 107
-Generators.tests.cpp:<line number>: passed: x < y for: 4 < 108
-Generators.tests.cpp:<line number>: passed: x < y for: 4 < 109
-Generators.tests.cpp:<line number>: passed: x < y for: 4 < 110
-Generators.tests.cpp:<line number>: passed: x < y for: 5 < 101
-Generators.tests.cpp:<line number>: passed: x < y for: 5 < 102
-Generators.tests.cpp:<line number>: passed: x < y for: 5 < 103
-Generators.tests.cpp:<line number>: passed: x < y for: 5 < 104
-Generators.tests.cpp:<line number>: passed: x < y for: 5 < 105
-Generators.tests.cpp:<line number>: passed: x < y for: 5 < 106
-Generators.tests.cpp:<line number>: passed: x < y for: 5 < 107
-Generators.tests.cpp:<line number>: passed: x < y for: 5 < 108
-Generators.tests.cpp:<line number>: passed: x < y for: 5 < 109
-Generators.tests.cpp:<line number>: passed: x < y for: 5 < 110
-Generators.tests.cpp:<line number>: passed: x < y for: 6 < 101
-Generators.tests.cpp:<line number>: passed: x < y for: 6 < 102
-Generators.tests.cpp:<line number>: passed: x < y for: 6 < 103
-Generators.tests.cpp:<line number>: passed: x < y for: 6 < 104
-Generators.tests.cpp:<line number>: passed: x < y for: 6 < 105
-Generators.tests.cpp:<line number>: passed: x < y for: 6 < 106
-Generators.tests.cpp:<line number>: passed: x < y for: 6 < 107
-Generators.tests.cpp:<line number>: passed: x < y for: 6 < 108
-Generators.tests.cpp:<line number>: passed: x < y for: 6 < 109
-Generators.tests.cpp:<line number>: passed: x < y for: 6 < 110
-Generators.tests.cpp:<line number>: passed: x < y for: 7 < 101
-Generators.tests.cpp:<line number>: passed: x < y for: 7 < 102
-Generators.tests.cpp:<line number>: passed: x < y for: 7 < 103
-Generators.tests.cpp:<line number>: passed: x < y for: 7 < 104
-Generators.tests.cpp:<line number>: passed: x < y for: 7 < 105
-Generators.tests.cpp:<line number>: passed: x < y for: 7 < 106
-Generators.tests.cpp:<line number>: passed: x < y for: 7 < 107
-Generators.tests.cpp:<line number>: passed: x < y for: 7 < 108
-Generators.tests.cpp:<line number>: passed: x < y for: 7 < 109
-Generators.tests.cpp:<line number>: passed: x < y for: 7 < 110
-Generators.tests.cpp:<line number>: passed: x < y for: 8 < 101
-Generators.tests.cpp:<line number>: passed: x < y for: 8 < 102
-Generators.tests.cpp:<line number>: passed: x < y for: 8 < 103
-Generators.tests.cpp:<line number>: passed: x < y for: 8 < 104
-Generators.tests.cpp:<line number>: passed: x < y for: 8 < 105
-Generators.tests.cpp:<line number>: passed: x < y for: 8 < 106
-Generators.tests.cpp:<line number>: passed: x < y for: 8 < 107
-Generators.tests.cpp:<line number>: passed: x < y for: 8 < 108
-Generators.tests.cpp:<line number>: passed: x < y for: 8 < 109
-Generators.tests.cpp:<line number>: passed: x < y for: 8 < 110
-Generators.tests.cpp:<line number>: passed: x < y for: 9 < 101
-Generators.tests.cpp:<line number>: passed: x < y for: 9 < 102
-Generators.tests.cpp:<line number>: passed: x < y for: 9 < 103
-Generators.tests.cpp:<line number>: passed: x < y for: 9 < 104
-Generators.tests.cpp:<line number>: passed: x < y for: 9 < 105
-Generators.tests.cpp:<line number>: passed: x < y for: 9 < 106
-Generators.tests.cpp:<line number>: passed: x < y for: 9 < 107
-Generators.tests.cpp:<line number>: passed: x < y for: 9 < 108
-Generators.tests.cpp:<line number>: passed: x < y for: 9 < 109
-Generators.tests.cpp:<line number>: passed: x < y for: 9 < 110
-Generators.tests.cpp:<line number>: passed: x < y for: 10 < 101
-Generators.tests.cpp:<line number>: passed: x < y for: 10 < 102
-Generators.tests.cpp:<line number>: passed: x < y for: 10 < 103
-Generators.tests.cpp:<line number>: passed: x < y for: 10 < 104
-Generators.tests.cpp:<line number>: passed: x < y for: 10 < 105
-Generators.tests.cpp:<line number>: passed: x < y for: 10 < 106
-Generators.tests.cpp:<line number>: passed: x < y for: 10 < 107
-Generators.tests.cpp:<line number>: passed: x < y for: 10 < 108
-Generators.tests.cpp:<line number>: passed: x < y for: 10 < 109
-Generators.tests.cpp:<line number>: passed: x < y for: 10 < 110
+Generators.tests.cpp:<line number>: passed: x < y for: 1 < 4
+Generators.tests.cpp:<line number>: passed: y < z for: 4 < 7
+Generators.tests.cpp:<line number>: passed: x < z for: 1 < 7
+Generators.tests.cpp:<line number>: passed: x < y for: 1 < 4
+Generators.tests.cpp:<line number>: passed: y < z for: 4 < 8
+Generators.tests.cpp:<line number>: passed: x < z for: 1 < 8
+Generators.tests.cpp:<line number>: passed: x < y for: 1 < 4
+Generators.tests.cpp:<line number>: passed: y < z for: 4 < 9
+Generators.tests.cpp:<line number>: passed: x < z for: 1 < 9
+Generators.tests.cpp:<line number>: passed: x < y for: 1 < 5
+Generators.tests.cpp:<line number>: passed: y < z for: 5 < 7
+Generators.tests.cpp:<line number>: passed: x < z for: 1 < 7
+Generators.tests.cpp:<line number>: passed: x < y for: 1 < 5
+Generators.tests.cpp:<line number>: passed: y < z for: 5 < 8
+Generators.tests.cpp:<line number>: passed: x < z for: 1 < 8
+Generators.tests.cpp:<line number>: passed: x < y for: 1 < 5
+Generators.tests.cpp:<line number>: passed: y < z for: 5 < 9
+Generators.tests.cpp:<line number>: passed: x < z for: 1 < 9
+Generators.tests.cpp:<line number>: passed: x < y for: 1 < 6
+Generators.tests.cpp:<line number>: passed: y < z for: 6 < 7
+Generators.tests.cpp:<line number>: passed: x < z for: 1 < 7
+Generators.tests.cpp:<line number>: passed: x < y for: 1 < 6
+Generators.tests.cpp:<line number>: passed: y < z for: 6 < 8
+Generators.tests.cpp:<line number>: passed: x < z for: 1 < 8
+Generators.tests.cpp:<line number>: passed: x < y for: 1 < 6
+Generators.tests.cpp:<line number>: passed: y < z for: 6 < 9
+Generators.tests.cpp:<line number>: passed: x < z for: 1 < 9
+Generators.tests.cpp:<line number>: passed: x < y for: 2 < 4
+Generators.tests.cpp:<line number>: passed: y < z for: 4 < 7
+Generators.tests.cpp:<line number>: passed: x < z for: 2 < 7
+Generators.tests.cpp:<line number>: passed: x < y for: 2 < 4
+Generators.tests.cpp:<line number>: passed: y < z for: 4 < 8
+Generators.tests.cpp:<line number>: passed: x < z for: 2 < 8
+Generators.tests.cpp:<line number>: passed: x < y for: 2 < 4
+Generators.tests.cpp:<line number>: passed: y < z for: 4 < 9
+Generators.tests.cpp:<line number>: passed: x < z for: 2 < 9
+Generators.tests.cpp:<line number>: passed: x < y for: 2 < 5
+Generators.tests.cpp:<line number>: passed: y < z for: 5 < 7
+Generators.tests.cpp:<line number>: passed: x < z for: 2 < 7
+Generators.tests.cpp:<line number>: passed: x < y for: 2 < 5
+Generators.tests.cpp:<line number>: passed: y < z for: 5 < 8
+Generators.tests.cpp:<line number>: passed: x < z for: 2 < 8
+Generators.tests.cpp:<line number>: passed: x < y for: 2 < 5
+Generators.tests.cpp:<line number>: passed: y < z for: 5 < 9
+Generators.tests.cpp:<line number>: passed: x < z for: 2 < 9
+Generators.tests.cpp:<line number>: passed: x < y for: 2 < 6
+Generators.tests.cpp:<line number>: passed: y < z for: 6 < 7
+Generators.tests.cpp:<line number>: passed: x < z for: 2 < 7
+Generators.tests.cpp:<line number>: passed: x < y for: 2 < 6
+Generators.tests.cpp:<line number>: passed: y < z for: 6 < 8
+Generators.tests.cpp:<line number>: passed: x < z for: 2 < 8
+Generators.tests.cpp:<line number>: passed: x < y for: 2 < 6
+Generators.tests.cpp:<line number>: passed: y < z for: 6 < 9
+Generators.tests.cpp:<line number>: passed: x < z for: 2 < 9
+Generators.tests.cpp:<line number>: passed: x < y for: 3 < 4
+Generators.tests.cpp:<line number>: passed: y < z for: 4 < 7
+Generators.tests.cpp:<line number>: passed: x < z for: 3 < 7
+Generators.tests.cpp:<line number>: passed: x < y for: 3 < 4
+Generators.tests.cpp:<line number>: passed: y < z for: 4 < 8
+Generators.tests.cpp:<line number>: passed: x < z for: 3 < 8
+Generators.tests.cpp:<line number>: passed: x < y for: 3 < 4
+Generators.tests.cpp:<line number>: passed: y < z for: 4 < 9
+Generators.tests.cpp:<line number>: passed: x < z for: 3 < 9
+Generators.tests.cpp:<line number>: passed: x < y for: 3 < 5
+Generators.tests.cpp:<line number>: passed: y < z for: 5 < 7
+Generators.tests.cpp:<line number>: passed: x < z for: 3 < 7
+Generators.tests.cpp:<line number>: passed: x < y for: 3 < 5
+Generators.tests.cpp:<line number>: passed: y < z for: 5 < 8
+Generators.tests.cpp:<line number>: passed: x < z for: 3 < 8
+Generators.tests.cpp:<line number>: passed: x < y for: 3 < 5
+Generators.tests.cpp:<line number>: passed: y < z for: 5 < 9
+Generators.tests.cpp:<line number>: passed: x < z for: 3 < 9
+Generators.tests.cpp:<line number>: passed: x < y for: 3 < 6
+Generators.tests.cpp:<line number>: passed: y < z for: 6 < 7
+Generators.tests.cpp:<line number>: passed: x < z for: 3 < 7
+Generators.tests.cpp:<line number>: passed: x < y for: 3 < 6
+Generators.tests.cpp:<line number>: passed: y < z for: 6 < 8
+Generators.tests.cpp:<line number>: passed: x < z for: 3 < 8
+Generators.tests.cpp:<line number>: passed: x < y for: 3 < 6
+Generators.tests.cpp:<line number>: passed: y < z for: 6 < 9
+Generators.tests.cpp:<line number>: passed: x < z for: 3 < 9
 Class.tests.cpp:<line number>: failed: s == "world" for: "hello" == "world"
 Class.tests.cpp:<line number>: passed: s == "hello" for: "hello" == "hello"
 Class.tests.cpp:<line number>: failed: Template_Fixture_2<TestType>::m_a.size() == 1 for: 0 == 1
@@ -167,18 +157,36 @@ Class.tests.cpp:<line number>: passed: Template_Fixture_2<TestType>::m_a.size() 
 Class.tests.cpp:<line number>: passed: Template_Fixture_2<TestType>::m_a.size() == 0 for: 0 == 0
 Class.tests.cpp:<line number>: passed: Template_Fixture_2<TestType>::m_a.size() == 0 for: 0 == 0
 Class.tests.cpp:<line number>: passed: Template_Fixture_2<TestType>::m_a.size() == 0 for: 0 == 0
+Class.tests.cpp:<line number>: failed: Template_Fixture_2<TestType>{}.m_a.size() < 2 for: 6 < 2
+Class.tests.cpp:<line number>: failed: Template_Fixture_2<TestType>{}.m_a.size() < 2 for: 2 < 2
+Class.tests.cpp:<line number>: failed: Template_Fixture_2<TestType>{}.m_a.size() < 2 for: 6 < 2
+Class.tests.cpp:<line number>: failed: Template_Fixture_2<TestType>{}.m_a.size() < 2 for: 2 < 2
+Class.tests.cpp:<line number>: passed: Template_Fixture_2<TestType>{}.m_a.size() >= 2 for: 6 >= 2
+Class.tests.cpp:<line number>: passed: Template_Fixture_2<TestType>{}.m_a.size() >= 2 for: 2 >= 2
+Class.tests.cpp:<line number>: passed: Template_Fixture_2<TestType>{}.m_a.size() >= 2 for: 6 >= 2
+Class.tests.cpp:<line number>: passed: Template_Fixture_2<TestType>{}.m_a.size() >= 2 for: 2 >= 2
 Class.tests.cpp:<line number>: failed: Template_Fixture<TestType>::m_a == 2 for: 1.0 == 2
 Class.tests.cpp:<line number>: failed: Template_Fixture<TestType>::m_a == 2 for: 1.0f == 2
 Class.tests.cpp:<line number>: failed: Template_Fixture<TestType>::m_a == 2 for: 1 == 2
 Class.tests.cpp:<line number>: passed: Template_Fixture<TestType>::m_a == 1 for: 1.0 == 1
 Class.tests.cpp:<line number>: passed: Template_Fixture<TestType>::m_a == 1 for: 1.0f == 1
 Class.tests.cpp:<line number>: passed: Template_Fixture<TestType>::m_a == 1 for: 1 == 1
+Class.tests.cpp:<line number>: failed: Nttp_Fixture<V>::value == 0 for: 1 == 0
+Class.tests.cpp:<line number>: failed: Nttp_Fixture<V>::value == 0 for: 3 == 0
+Class.tests.cpp:<line number>: failed: Nttp_Fixture<V>::value == 0 for: 6 == 0
+Class.tests.cpp:<line number>: passed: Nttp_Fixture<V>::value > 0 for: 1 > 0
+Class.tests.cpp:<line number>: passed: Nttp_Fixture<V>::value > 0 for: 3 > 0
+Class.tests.cpp:<line number>: passed: Nttp_Fixture<V>::value > 0 for: 6 > 0
 Class.tests.cpp:<line number>: failed: m_a == 2 for: 1 == 2
 Class.tests.cpp:<line number>: passed: m_a == 1 for: 1 == 1
 Misc.tests.cpp:<line number>: passed: x.size() == 0 for: 0 == 0
 Misc.tests.cpp:<line number>: passed: x.size() == 0 for: 0 == 0
 Misc.tests.cpp:<line number>: passed: x.size() == 0 for: 0 == 0
 Misc.tests.cpp:<line number>: passed: x.size() == 0 for: 0 == 0
+Misc.tests.cpp:<line number>: passed: x.size() > 0 for: 42 > 0
+Misc.tests.cpp:<line number>: passed: x.size() > 0 for: 9 > 0
+Misc.tests.cpp:<line number>: passed: x.size() > 0 for: 42 > 0
+Misc.tests.cpp:<line number>: passed: x.size() > 0 for: 9 > 0
 Approx.tests.cpp:<line number>: passed: d == 1.23_a for: 1.23 == Approx( 1.23 )
 Approx.tests.cpp:<line number>: passed: d != 1.22_a for: 1.23 != Approx( 1.22 )
 Approx.tests.cpp:<line number>: passed: -d == -1.23_a for: -1.23 == Approx( -1.23 )
@@ -238,10 +246,9 @@ Tricky.tests.cpp:<line number>: passed: true
 Approx.tests.cpp:<line number>: passed: INFINITY == Approx(INFINITY) for: inff == Approx( inf )
 Approx.tests.cpp:<line number>: passed: NAN != Approx(NAN) for: nanf != Approx( nan )
 Approx.tests.cpp:<line number>: passed: !(NAN == Approx(NAN)) for: !(nanf == Approx( nan ))
-Tricky.tests.cpp:<line number>: passed: y.v == 0 for: 0 == 0
-Tricky.tests.cpp:<line number>: passed: 0 == y.v for: 0 == 0
 Message.tests.cpp:<line number>: passed: with 7 messages: 'a := 1' and 'b := 2' and 'c := 3' and 'a + b := 3' and 'a+b := 3' and 'c > b := true' and 'a == 1 := true'
 Message.tests.cpp:<line number>: passed: with 7 messages: 'std::vector<int>{1, 2, 3}[0, 1, 2] := 3' and 'std::vector<int>{1, 2, 3}[(0, 1)] := 2' and 'std::vector<int>{1, 2, 3}[0] := 1' and '(helper_1436<int, int>{12, -12}) := { 12, -12 }' and '(helper_1436<int, int>(-12, 12)) := { -12, 12 }' and '(1, 2) := 2' and '(2, 3) := 3'
+Message.tests.cpp:<line number>: passed: with 11 messages: '("comma, in string", "escaped, \", ") := "escaped, ", "' and '"single quote in string,'," := "single quote in string,',"' and '"some escapes, \\,\\\\" := "some escapes, \,\\"' and '"some, ), unmatched, } prenheses {[<" := "some, ), unmatched, } prenheses {[<"' and ''"' := '"'' and ''\'' := '''' and '',' := ','' and ''}' := '}'' and '')' := ')'' and ''(' := '('' and ''{' := '{''
 ToStringGeneral.tests.cpp:<line number>: passed: true with 1 message: 'i := 2'
 ToStringGeneral.tests.cpp:<line number>: passed: true with 1 message: '3'
 ToStringGeneral.tests.cpp:<line number>: passed: tab == '\t' for: '\t' == '\t'
@@ -311,8 +318,22 @@ Exception.tests.cpp:<line number>: failed: unexpected exception with message: 'c
 Exception.tests.cpp:<line number>: failed: unexpected exception with message: 'custom std exception'
 Approx.tests.cpp:<line number>: passed: 101.000001 != Approx(100).epsilon(0.01) for: 101.000001 != Approx( 100.0 )
 Approx.tests.cpp:<line number>: passed: std::pow(10, -5) != Approx(std::pow(10, -7)) for: 0.00001 != Approx( 0.0000001 )
+ToString.tests.cpp:<line number>: passed: enumInfo->lookup(0) == "Value1" for: Value1 == "Value1"
+ToString.tests.cpp:<line number>: passed: enumInfo->lookup(1) == "Value2" for: Value2 == "Value2"
+ToString.tests.cpp:<line number>: passed: enumInfo->lookup(3) == "{** unexpected enum value **}" for: {** unexpected enum value **}
+==
+"{** unexpected enum value **}"
 Matchers.tests.cpp:<line number>: failed: testStringForMatching(), EndsWith("Substring") for: "this string contains 'abc' as a substring" ends with: "Substring"
 Matchers.tests.cpp:<line number>: failed: testStringForMatching(), EndsWith("this", Catch::CaseSensitive::No) for: "this string contains 'abc' as a substring" ends with: "this" (case insensitive)
+EnumToString.tests.cpp:<line number>: passed: stringify( EnumClass3::Value1 ) == "Value1" for: "Value1" == "Value1"
+EnumToString.tests.cpp:<line number>: passed: stringify( EnumClass3::Value2 ) == "Value2" for: "Value2" == "Value2"
+EnumToString.tests.cpp:<line number>: passed: stringify( EnumClass3::Value3 ) == "Value3" for: "Value3" == "Value3"
+EnumToString.tests.cpp:<line number>: passed: stringify( EnumClass3::Value4 ) == "{** unexpected enum value **}" for: "{** unexpected enum value **}"
+==
+"{** unexpected enum value **}"
+EnumToString.tests.cpp:<line number>: passed: stringify( ec3 ) == "Value2" for: "Value2" == "Value2"
+EnumToString.tests.cpp:<line number>: passed: stringify( Bikeshed::Colours::Red ) == "Red" for: "Red" == "Red"
+EnumToString.tests.cpp:<line number>: passed: stringify( Bikeshed::Colours::Blue ) == "Blue" for: "Blue" == "Blue"
 Approx.tests.cpp:<line number>: passed: 101.01 != Approx(100).epsilon(0.01) for: 101.01 != Approx( 100.0 )
 Condition.tests.cpp:<line number>: failed: data.int_seven == 6 for: 7 == 6
 Condition.tests.cpp:<line number>: failed: data.int_seven == 8 for: 7 == 8
@@ -338,9 +359,9 @@ Matchers.tests.cpp:<line number>: passed: testStringForMatching(), Equals("this 
 Matchers.tests.cpp:<line number>: passed: testStringForMatching(), Equals("this string contains 'ABC' as a substring", Catch::CaseSensitive::No) for: "this string contains 'abc' as a substring" equals: "this string contains 'abc' as a substring" (case insensitive)
 Matchers.tests.cpp:<line number>: failed: testStringForMatching(), Equals("this string contains 'ABC' as a substring") for: "this string contains 'abc' as a substring" equals: "this string contains 'ABC' as a substring"
 Matchers.tests.cpp:<line number>: failed: testStringForMatching(), Equals("something else", Catch::CaseSensitive::No) for: "this string contains 'abc' as a substring" equals: "something else" (case insensitive)
-ToStringGeneral.tests.cpp:<line number>: passed: ::Catch::Detail::stringify(WhatException{}) == "This exception has overriden what() method" for: "This exception has overriden what() method"
+ToStringGeneral.tests.cpp:<line number>: passed: ::Catch::Detail::stringify(WhatException{}) == "This exception has overridden what() method" for: "This exception has overridden what() method"
 ==
-"This exception has overriden what() method"
+"This exception has overridden what() method"
 ToStringGeneral.tests.cpp:<line number>: passed: ::Catch::Detail::stringify(OperatorException{}) == "OperatorException" for: "OperatorException" == "OperatorException"
 ToStringGeneral.tests.cpp:<line number>: passed: ::Catch::Detail::stringify(StringMakerException{}) == "StringMakerException" for: "StringMakerException"
 ==
@@ -375,21 +396,18 @@ Matchers.tests.cpp:<line number>: passed: 1., WithinAbs(1., 0) for: 1.0 is withi
 Matchers.tests.cpp:<line number>: passed: 0., WithinAbs(1., 1) for: 0.0 is within 1.0 of 1.0
 Matchers.tests.cpp:<line number>: passed: 0., !WithinAbs(1., 0.99) for: 0.0 not is within 0.99 of 1.0
 Matchers.tests.cpp:<line number>: passed: 0., !WithinAbs(1., 0.99) for: 0.0 not is within 0.99 of 1.0
-Matchers.tests.cpp:<line number>: passed: NAN, !WithinAbs(NAN, 0) for: nanf not is within 0.0 of nan
 Matchers.tests.cpp:<line number>: passed: 11., !WithinAbs(10., 0.5) for: 11.0 not is within 0.5 of 10.0
 Matchers.tests.cpp:<line number>: passed: 10., !WithinAbs(11., 0.5) for: 10.0 not is within 0.5 of 11.0
 Matchers.tests.cpp:<line number>: passed: -10., WithinAbs(-10., 0.5) for: -10.0 is within 0.5 of -10.0
 Matchers.tests.cpp:<line number>: passed: -10., WithinAbs(-9.6, 0.5) for: -10.0 is within 0.5 of -9.6
-Matchers.tests.cpp:<line number>: passed: 1., WithinULP(1., 0) for: 1.0 is within 0 ULPs of 1.0
-Matchers.tests.cpp:<line number>: passed: nextafter(1., 2.), WithinULP(1., 1) for: 1.0 is within 1 ULPs of 1.0
-Matchers.tests.cpp:<line number>: passed: nextafter(1., 0.), WithinULP(1., 1) for: 1.0 is within 1 ULPs of 1.0
-Matchers.tests.cpp:<line number>: passed: nextafter(1., 2.), !WithinULP(1., 0) for: 1.0 not is within 0 ULPs of 1.0
-Matchers.tests.cpp:<line number>: passed: 1., WithinULP(1., 0) for: 1.0 is within 0 ULPs of 1.0
-Matchers.tests.cpp:<line number>: passed: -0., WithinULP(0., 0) for: -0.0 is within 0 ULPs of 0.0
-Matchers.tests.cpp:<line number>: passed: NAN, !WithinULP(NAN, 123) for: nanf not is within 123 ULPs of nanf
-Matchers.tests.cpp:<line number>: passed: 1., WithinAbs(1., 0.5) || WithinULP(2., 1) for: 1.0 ( is within 0.5 of 1.0 or is within 1 ULPs of 2.0 )
-Matchers.tests.cpp:<line number>: passed: 1., WithinAbs(2., 0.5) || WithinULP(1., 0) for: 1.0 ( is within 0.5 of 2.0 or is within 0 ULPs of 1.0 )
-Matchers.tests.cpp:<line number>: passed: NAN, !(WithinAbs(NAN, 100) || WithinULP(NAN, 123)) for: nanf not ( is within 100.0 of nan or is within 123 ULPs of nanf )
+Matchers.tests.cpp:<line number>: passed: 1., WithinULP(1., 0) for: 1.0 is within 0 ULPs of 1.0 ([1.00000000000000000, 1.00000000000000000])
+Matchers.tests.cpp:<line number>: passed: nextafter(1., 2.), WithinULP(1., 1) for: 1.0 is within 1 ULPs of 1.0 ([0.99999999999999989, 1.00000000000000022])
+Matchers.tests.cpp:<line number>: passed: nextafter(1., 0.), WithinULP(1., 1) for: 1.0 is within 1 ULPs of 1.0 ([0.99999999999999989, 1.00000000000000022])
+Matchers.tests.cpp:<line number>: passed: nextafter(1., 2.), !WithinULP(1., 0) for: 1.0 not is within 0 ULPs of 1.0 ([1.00000000000000000, 1.00000000000000000])
+Matchers.tests.cpp:<line number>: passed: 1., WithinULP(1., 0) for: 1.0 is within 0 ULPs of 1.0 ([1.00000000000000000, 1.00000000000000000])
+Matchers.tests.cpp:<line number>: passed: -0., WithinULP(0., 0) for: -0.0 is within 0 ULPs of 0.0 ([0.00000000000000000, 0.00000000000000000])
+Matchers.tests.cpp:<line number>: passed: 1., WithinAbs(1., 0.5) || WithinULP(2., 1) for: 1.0 ( is within 0.5 of 1.0 or is within 1 ULPs of 2.0 ([1.99999999999999978, 2.00000000000000044]) )
+Matchers.tests.cpp:<line number>: passed: 1., WithinAbs(2., 0.5) || WithinULP(1., 0) for: 1.0 ( is within 0.5 of 2.0 or is within 0 ULPs of 1.0 ([1.00000000000000000, 1.00000000000000000]) )
 Matchers.tests.cpp:<line number>: passed: WithinAbs(1., 0.)
 Matchers.tests.cpp:<line number>: passed: WithinAbs(1., -1.), std::domain_error
 Matchers.tests.cpp:<line number>: passed: WithinULP(1., 0)
@@ -399,67 +417,208 @@ Matchers.tests.cpp:<line number>: passed: 0.f, WithinAbs(1.f, 1) for: 0.0f is wi
 Matchers.tests.cpp:<line number>: passed: 0.f, !WithinAbs(1.f, 0.99f) for: 0.0f not is within 0.9900000095 of 1.0
 Matchers.tests.cpp:<line number>: passed: 0.f, !WithinAbs(1.f, 0.99f) for: 0.0f not is within 0.9900000095 of 1.0
 Matchers.tests.cpp:<line number>: passed: 0.f, WithinAbs(-0.f, 0) for: 0.0f is within 0.0 of -0.0
-Matchers.tests.cpp:<line number>: passed: NAN, !WithinAbs(NAN, 0) for: nanf not is within 0.0 of nan
 Matchers.tests.cpp:<line number>: passed: 11.f, !WithinAbs(10.f, 0.5f) for: 11.0f not is within 0.5 of 10.0
 Matchers.tests.cpp:<line number>: passed: 10.f, !WithinAbs(11.f, 0.5f) for: 10.0f not is within 0.5 of 11.0
 Matchers.tests.cpp:<line number>: passed: -10.f, WithinAbs(-10.f, 0.5f) for: -10.0f is within 0.5 of -10.0
 Matchers.tests.cpp:<line number>: passed: -10.f, WithinAbs(-9.6f, 0.5f) for: -10.0f is within 0.5 of -9.6000003815
-Matchers.tests.cpp:<line number>: passed: 1.f, WithinULP(1.f, 0) for: 1.0f is within 0 ULPs of 1.0f
-Matchers.tests.cpp:<line number>: passed: nextafter(1.f, 2.f), WithinULP(1.f, 1) for: 1.0f is within 1 ULPs of 1.0f
-Matchers.tests.cpp:<line number>: passed: nextafter(1.f, 0.f), WithinULP(1.f, 1) for: 1.0f is within 1 ULPs of 1.0f
-Matchers.tests.cpp:<line number>: passed: nextafter(1.f, 2.f), !WithinULP(1.f, 0) for: 1.0f not is within 0 ULPs of 1.0f
-Matchers.tests.cpp:<line number>: passed: 1.f, WithinULP(1.f, 0) for: 1.0f is within 0 ULPs of 1.0f
-Matchers.tests.cpp:<line number>: passed: -0.f, WithinULP(0.f, 0) for: -0.0f is within 0 ULPs of 0.0f
-Matchers.tests.cpp:<line number>: passed: NAN, !WithinULP(NAN, 123) for: nanf not is within 123 ULPs of nanf
-Matchers.tests.cpp:<line number>: passed: 1.f, WithinAbs(1.f, 0.5) || WithinULP(1.f, 1) for: 1.0f ( is within 0.5 of 1.0 or is within 1 ULPs of 1.0f )
-Matchers.tests.cpp:<line number>: passed: 1.f, WithinAbs(2.f, 0.5) || WithinULP(1.f, 0) for: 1.0f ( is within 0.5 of 2.0 or is within 0 ULPs of 1.0f )
-Matchers.tests.cpp:<line number>: passed: NAN, !(WithinAbs(NAN, 100) || WithinULP(NAN, 123)) for: nanf not ( is within 100.0 of nan or is within 123 ULPs of nanf )
+Matchers.tests.cpp:<line number>: passed: 1.f, WithinULP(1.f, 0) for: 1.0f is within 0 ULPs of 1.0f ([1.00000000000000000, 1.00000000000000000])
+Matchers.tests.cpp:<line number>: passed: nextafter(1.f, 2.f), WithinULP(1.f, 1) for: 1.0f is within 1 ULPs of 1.0f ([0.99999994039535522, 1.00000011920928955])
+Matchers.tests.cpp:<line number>: passed: nextafter(1.f, 0.f), WithinULP(1.f, 1) for: 1.0f is within 1 ULPs of 1.0f ([0.99999994039535522, 1.00000011920928955])
+Matchers.tests.cpp:<line number>: passed: nextafter(1.f, 2.f), !WithinULP(1.f, 0) for: 1.0f not is within 0 ULPs of 1.0f ([1.00000000000000000, 1.00000000000000000])
+Matchers.tests.cpp:<line number>: passed: 1.f, WithinULP(1.f, 0) for: 1.0f is within 0 ULPs of 1.0f ([1.00000000000000000, 1.00000000000000000])
+Matchers.tests.cpp:<line number>: passed: -0.f, WithinULP(0.f, 0) for: -0.0f is within 0 ULPs of 0.0f ([0.00000000000000000, 0.00000000000000000])
+Matchers.tests.cpp:<line number>: passed: 1.f, WithinAbs(1.f, 0.5) || WithinULP(1.f, 1) for: 1.0f ( is within 0.5 of 1.0 or is within 1 ULPs of 1.0f ([0.99999994039535522, 1.00000011920928955]) )
+Matchers.tests.cpp:<line number>: passed: 1.f, WithinAbs(2.f, 0.5) || WithinULP(1.f, 0) for: 1.0f ( is within 0.5 of 2.0 or is within 0 ULPs of 1.0f ([1.00000000000000000, 1.00000000000000000]) )
 Matchers.tests.cpp:<line number>: passed: WithinAbs(1.f, 0.f)
 Matchers.tests.cpp:<line number>: passed: WithinAbs(1.f, -1.f), std::domain_error
 Matchers.tests.cpp:<line number>: passed: WithinULP(1.f, 0)
 Matchers.tests.cpp:<line number>: passed: WithinULP(1.f, -1), std::domain_error
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "a"' and 'j := 8'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "a"' and 'j := 9'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "a"' and 'j := 10'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "a"' and 'j := 2'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "a"' and 'j := 3.141'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "a"' and 'j := 1.379'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "b"' and 'j := 8'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "b"' and 'j := 9'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "b"' and 'j := 10'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "b"' and 'j := 2'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "b"' and 'j := 3.141'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "b"' and 'j := 1.379'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "c"' and 'j := 8'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "c"' and 'j := 9'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "c"' and 'j := 10'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "c"' and 'j := 2'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "c"' and 'j := 3.141'
-Generators.tests.cpp:<line number>: passed: with 2 messages: 'i := "c"' and 'j := 1.379'
-GeneratorsImpl.tests.cpp:<line number>: passed: gen.size() == 2 for: 2 == 2
-GeneratorsImpl.tests.cpp:<line number>: passed: gen[0] == 1 for: 1 == 1
-GeneratorsImpl.tests.cpp:<line number>: passed: gen[1] == 2 for: 2 == 2
-GeneratorsImpl.tests.cpp:<line number>: passed: gen.size() == 4 for: 4 == 4
-GeneratorsImpl.tests.cpp:<line number>: passed: gen[0] == 3 for: 3 == 3
-GeneratorsImpl.tests.cpp:<line number>: passed: gen[1] == 1 for: 1 == 1
-GeneratorsImpl.tests.cpp:<line number>: passed: gen[2] == 4 for: 4 == 4
-GeneratorsImpl.tests.cpp:<line number>: passed: gen[3] == 1 for: 1 == 1
-GeneratorsImpl.tests.cpp:<line number>: passed: gen.size() == 4 for: 4 == 4
-GeneratorsImpl.tests.cpp:<line number>: passed: gen[0] == 1 for: 1 == 1
-GeneratorsImpl.tests.cpp:<line number>: passed: gen[1] == 2 for: 2 == 2
-GeneratorsImpl.tests.cpp:<line number>: passed: gen[2] == 9 for: 9 == 9
-GeneratorsImpl.tests.cpp:<line number>: passed: gen[3] == 7 for: 7 == 7
-GeneratorsImpl.tests.cpp:<line number>: passed: gen.size() == 2 for: 2 == 2
-GeneratorsImpl.tests.cpp:<line number>: passed: gen[0] == 3 for: 3 == 3
-GeneratorsImpl.tests.cpp:<line number>: passed: gen[1] == 1 for: 1 == 1
-GeneratorsImpl.tests.cpp:<line number>: passed: gen.size() == 2 for: 2 == 2
-GeneratorsImpl.tests.cpp:<line number>: passed: gen[0] == 3 for: 3 == 3
-GeneratorsImpl.tests.cpp:<line number>: passed: gen[1] == 1 for: 1 == 1
-GeneratorsImpl.tests.cpp:<line number>: passed: base->size() == 4 for: 4 == 4
-GeneratorsImpl.tests.cpp:<line number>: passed: typed for: 0x<hex digits>
-GeneratorsImpl.tests.cpp:<line number>: passed: typed->size() == 4 for: 4 == 4
-GeneratorsImpl.tests.cpp:<line number>: passed: (*typed)[0] == 7 for: 7 == 7
-GeneratorsImpl.tests.cpp:<line number>: passed: (*typed)[3] == 11 for: 11 == 11
+Generators.tests.cpp:<line number>: passed: i % 2 == 0 for: 0 == 0
+Generators.tests.cpp:<line number>: passed: i % 2 == 0 for: 0 == 0
+Generators.tests.cpp:<line number>: passed: i % 2 == 0 for: 0 == 0
+Generators.tests.cpp:<line number>: passed: filter([] (int) {return false; }, value(1)), Catch::GeneratorException
+Generators.tests.cpp:<line number>: passed: i < 4 for: 1 < 4
+Generators.tests.cpp:<line number>: passed: i < 4 for: 2 < 4
+Generators.tests.cpp:<line number>: passed: i < 4 for: 3 < 4
+Generators.tests.cpp:<line number>: passed: i % 2 == 0 for: 0 == 0
+Generators.tests.cpp:<line number>: passed: i % 2 == 0 for: 0 == 0
+Generators.tests.cpp:<line number>: passed: i % 2 == 0 for: 0 == 0
+Generators.tests.cpp:<line number>: passed: i.size() == 1 for: 1 == 1
+Generators.tests.cpp:<line number>: passed: i.size() == 1 for: 1 == 1
+Generators.tests.cpp:<line number>: passed: i.size() == 1 for: 1 == 1
+Generators.tests.cpp:<line number>: passed: i.size() == 1 for: 1 == 1
+Generators.tests.cpp:<line number>: passed: i.size() == 1 for: 1 == 1
+Generators.tests.cpp:<line number>: passed: i.size() == 1 for: 1 == 1
+Generators.tests.cpp:<line number>: passed: j > 0 for: 1 > 0
+Generators.tests.cpp:<line number>: passed: j > 0 for: 2 > 0
+Generators.tests.cpp:<line number>: passed: j > 0 for: 3 > 0
+Generators.tests.cpp:<line number>: passed: j > 0 for: 1 > 0
+Generators.tests.cpp:<line number>: passed: j > 0 for: 2 > 0
+Generators.tests.cpp:<line number>: passed: j > 0 for: 3 > 0
+Generators.tests.cpp:<line number>: passed: chunk2.size() == 2 for: 2 == 2
+Generators.tests.cpp:<line number>: passed: chunk2.front() == chunk2.back() for: 1 == 1
+Generators.tests.cpp:<line number>: passed: chunk2.size() == 2 for: 2 == 2
+Generators.tests.cpp:<line number>: passed: chunk2.front() == chunk2.back() for: 2 == 2
+Generators.tests.cpp:<line number>: passed: chunk2.size() == 2 for: 2 == 2
+Generators.tests.cpp:<line number>: passed: chunk2.front() == chunk2.back() for: 3 == 3
+Generators.tests.cpp:<line number>: passed: chunk2.size() == 2 for: 2 == 2
+Generators.tests.cpp:<line number>: passed: chunk2.front() == chunk2.back() for: 1 == 1
+Generators.tests.cpp:<line number>: passed: chunk2.front() < 3 for: 1 < 3
+Generators.tests.cpp:<line number>: passed: chunk2.size() == 2 for: 2 == 2
+Generators.tests.cpp:<line number>: passed: chunk2.front() == chunk2.back() for: 2 == 2
+Generators.tests.cpp:<line number>: passed: chunk2.front() < 3 for: 2 < 3
+Generators.tests.cpp:<line number>: passed: chunk2.size() == 0 for: 0 == 0
+Generators.tests.cpp:<line number>: passed: chunk2.size() == 0 for: 0 == 0
+Generators.tests.cpp:<line number>: passed: chunk2.size() == 0 for: 0 == 0
+Generators.tests.cpp:<line number>: passed: chunk(2, value(1)), Catch::GeneratorException
+Generators.tests.cpp:<line number>: passed: j < i for: -3 < 1
+Generators.tests.cpp:<line number>: passed: j < i for: -2 < 1
+Generators.tests.cpp:<line number>: passed: j < i for: -1 < 1
+Generators.tests.cpp:<line number>: passed: 4u * i > str.size() for: 4 > 1
+Generators.tests.cpp:<line number>: passed: 4u * i > str.size() for: 4 > 2
+Generators.tests.cpp:<line number>: passed: 4u * i > str.size() for: 4 > 3
+Generators.tests.cpp:<line number>: passed: j < i for: -3 < 2
+Generators.tests.cpp:<line number>: passed: j < i for: -2 < 2
+Generators.tests.cpp:<line number>: passed: j < i for: -1 < 2
+Generators.tests.cpp:<line number>: passed: 4u * i > str.size() for: 8 > 1
+Generators.tests.cpp:<line number>: passed: 4u * i > str.size() for: 8 > 2
+Generators.tests.cpp:<line number>: passed: 4u * i > str.size() for: 8 > 3
+Generators.tests.cpp:<line number>: passed: j < i for: -3 < 3
+Generators.tests.cpp:<line number>: passed: j < i for: -2 < 3
+Generators.tests.cpp:<line number>: passed: j < i for: -1 < 3
+Generators.tests.cpp:<line number>: passed: 4u * i > str.size() for: 12 > 1
+Generators.tests.cpp:<line number>: passed: 4u * i > str.size() for: 12 > 2
+Generators.tests.cpp:<line number>: passed: 4u * i > str.size() for: 12 > 3
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 123 for: 123 == 123
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 1 for: 1 == 1
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 3 for: 3 == 3
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 5 for: 5 == 5
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 1 for: 1 == 1
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 5 for: 5 == 5
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 2 for: 2 == 2
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 4 for: 4 == 4
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 0 for: 0 == 0
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get().size() == 2 for: 2 == 2
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == "aa" for: "aa" == "aa"
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == "bb" for: "bb" == "bb"
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == "cc" for: "cc" == "cc"
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 1 for: 1 == 1
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 3 for: 3 == 3
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: filter([] (int) { return false; }, value(1)), Catch::GeneratorException
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 1 for: 1 == 1
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 2 for: 2 == 2
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 1 for: 1 == 1
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 2.0 for: 2.0 == 2.0
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 4.0 for: 4.0 == 4.0
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 6.0 for: 6.0 == 6.0
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 2.0 for: 2.0 == 2.0
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 4.0 for: 4.0 == 4.0
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 6.0 for: 6.0 == 6.0
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 3 for: 3 == 3
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 1 for: 1 == 1
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 2 for: 2 == 2
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 3 for: 3 == 3
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 1 for: 1 == 1
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 2 for: 2 == 2
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 3 for: 3 == 3
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -2 for: -2 == -2
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -1 for: -1 == -1
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 0 for: 0 == 0
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 1 for: 1 == 1
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 2 for: 2 == 2
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 1 for: 1 == 1
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 0 for: 0 == 0
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -1 for: -1 == -1
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -7 for: -7 == -7
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -4 for: -4 == -4
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -1 for: -1 == -1
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 2 for: 2 == 2
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -7 for: -7 == -7
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -4 for: -4 == -4
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -1 for: -1 == -1
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 2 for: 2 == 2
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -7 for: -7 == -7
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -4 for: -4 == -4
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -1 for: -1 == -1
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 2 for: 2 == 2
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 5 for: 5 == 5
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 5 for: 5 == 5
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 2 for: 2 == 2
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -1 for: -1 == -1
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -4 for: -4 == -4
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 5 for: 5 == 5
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 2 for: 2 == 2
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -1 for: -1 == -1
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -4 for: -4 == -4
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 5 for: 5 == 5
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == 2 for: 2 == 2
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -1 for: -1 == -1
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -4 for: -4 == -4
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.next() for: true
+GeneratorsImpl.tests.cpp:<line number>: passed: gen.get() == -7 for: -7 == -7
+GeneratorsImpl.tests.cpp:<line number>: passed: !(gen.next()) for: !false
 Approx.tests.cpp:<line number>: passed: d >= Approx( 1.22 ) for: 1.23 >= Approx( 1.22 )
 Approx.tests.cpp:<line number>: passed: d >= Approx( 1.23 ) for: 1.23 >= Approx( 1.23 )
 Approx.tests.cpp:<line number>: passed: !(d >= Approx( 1.24 )) for: !(1.23 >= Approx( 1.24 ))
@@ -511,6 +670,22 @@ Matchers.tests.cpp:<line number>: passed: testStringForMatching(), !Contains("di
 Matchers.tests.cpp:<line number>: failed: testStringForMatching(), !Contains("substring") for: "this string contains 'abc' as a substring" not contains: "substring"
 Exception.tests.cpp:<line number>: passed: thisThrows(), "expected exception" for: "expected exception" equals: "expected exception"
 Exception.tests.cpp:<line number>: failed: thisThrows(), "should fail" for: "expected exception" equals: "should fail"
+Generators.tests.cpp:<line number>: passed: values > -6 for: 3 > -6
+Generators.tests.cpp:<line number>: passed: values > -6 for: 4 > -6
+Generators.tests.cpp:<line number>: passed: values > -6 for: 5 > -6
+Generators.tests.cpp:<line number>: passed: values > -6 for: 6 > -6
+Generators.tests.cpp:<line number>: passed: values > -6 for: -5 > -6
+Generators.tests.cpp:<line number>: passed: values > -6 for: -4 > -6
+Generators.tests.cpp:<line number>: passed: values > -6 for: 90 > -6
+Generators.tests.cpp:<line number>: passed: values > -6 for: 91 > -6
+Generators.tests.cpp:<line number>: passed: values > -6 for: 92 > -6
+Generators.tests.cpp:<line number>: passed: values > -6 for: 93 > -6
+Generators.tests.cpp:<line number>: passed: values > -6 for: 94 > -6
+Generators.tests.cpp:<line number>: passed: values > -6 for: 95 > -6
+Generators.tests.cpp:<line number>: passed: values > -6 for: 96 > -6
+Generators.tests.cpp:<line number>: passed: values > -6 for: 97 > -6
+Generators.tests.cpp:<line number>: passed: values > -6 for: 98 > -6
+Generators.tests.cpp:<line number>: passed: values > -6 for: 99 > -6
 Misc.tests.cpp:<line number>: warning: 'This one ran'
 Exception.tests.cpp:<line number>: failed: unexpected exception with message: 'custom exception'
 Tricky.tests.cpp:<line number>: passed: True for: {?}
@@ -699,6 +874,10 @@ Condition.tests.cpp:<line number>: passed: cpc != 0 for: 0x<hex digits> != 0
 Condition.tests.cpp:<line number>: passed: returnsNull() == 0 for: {null string} == 0
 Condition.tests.cpp:<line number>: passed: returnsConstNull() == 0 for: {null string} == 0
 Condition.tests.cpp:<line number>: passed: 0 != p for: 0 != 0x<hex digits>
+ToStringGeneral.tests.cpp:<line number>: passed: str1.size() == 3 + 5 for: 8 == 8
+ToStringGeneral.tests.cpp:<line number>: passed: str2.size() == 3 + 10 for: 13 == 13
+ToStringGeneral.tests.cpp:<line number>: passed: str1.size() == 2 + 5 for: 7 == 7
+ToStringGeneral.tests.cpp:<line number>: passed: str2.size() == 2 + 15 for: 17 == 17
 Matchers.tests.cpp:<line number>: passed: "foo", Predicate<const char*>([] (const char* const&) { return true; }) for: "foo" matches undescribed predicate
 CmdLine.tests.cpp:<line number>: passed: result for: {?}
 CmdLine.tests.cpp:<line number>: passed: config.processName == "" for: "" == ""
@@ -762,9 +941,17 @@ CmdLine.tests.cpp:<line number>: passed: cli.parse({"test", "--use-colour", "no"
 CmdLine.tests.cpp:<line number>: passed: config.useColour == UseColour::No for: 2 == 2
 CmdLine.tests.cpp:<line number>: passed: !result for: true
 CmdLine.tests.cpp:<line number>: passed: result.errorMessage(), Contains( "colour mode must be one of" ) for: "colour mode must be one of: auto, yes or no. 'wrong' not recognised" contains: "colour mode must be one of"
-Misc.tests.cpp:<line number>: passed: std::tuple_size<TestType>::value >= 1 for: 1 >= 1
-Misc.tests.cpp:<line number>: passed: std::tuple_size<TestType>::value >= 1 for: 2 >= 1
+CmdLine.tests.cpp:<line number>: passed: cli.parse({ "test", "--benchmark-samples=200" }) for: {?}
+CmdLine.tests.cpp:<line number>: passed: config.benchmarkSamples == 200 for: 200 == 200
+CmdLine.tests.cpp:<line number>: passed: cli.parse({ "test", "--benchmark-resamples=20000" }) for: {?}
+CmdLine.tests.cpp:<line number>: passed: config.benchmarkResamples == 20000 for: 20000 (0x<hex digits>) == 20000 (0x<hex digits>)
+CmdLine.tests.cpp:<line number>: passed: cli.parse({ "test", "--benchmark-confidence-interval=0.99" }) for: {?}
+CmdLine.tests.cpp:<line number>: passed: config.benchmarkConfidenceInterval == Catch::Detail::Approx(0.99) for: 0.99 == Approx( 0.99 )
+CmdLine.tests.cpp:<line number>: passed: cli.parse({ "test", "--benchmark-no-analysis" }) for: {?}
+CmdLine.tests.cpp:<line number>: passed: config.benchmarkNoAnalysis for: true
 Misc.tests.cpp:<line number>: passed: std::tuple_size<TestType>::value >= 1 for: 3 >= 1
+Misc.tests.cpp:<line number>: passed: std::tuple_size<TestType>::value >= 1 for: 2 >= 1
+Misc.tests.cpp:<line number>: passed: std::tuple_size<TestType>::value >= 1 for: 1 >= 1
 Decomposition.tests.cpp:<line number>: failed: truthy(false) for: Hey, its truthy!
 Matchers.tests.cpp:<line number>: failed: testStringForMatching(), Matches("this STRING contains 'abc' as a substring") for: "this string contains 'abc' as a substring" matches "this STRING contains 'abc' as a substring" case sensitively
 Matchers.tests.cpp:<line number>: failed: testStringForMatching(), Matches("contains 'abc' as a substring") for: "this string contains 'abc' as a substring" matches "contains 'abc' as a substring" case sensitively
@@ -827,7 +1014,6 @@ String.tests.cpp:<line number>: passed: isOwned( s ) == false for: false == fals
 String.tests.cpp:<line number>: passed: original == "original"
 String.tests.cpp:<line number>: passed: isSubstring( original ) for: true
 String.tests.cpp:<line number>: passed: isOwned( original ) == false for: false == false
-String.tests.cpp:<line number>: passed: isSubstring( original ) == false for: false == false
 String.tests.cpp:<line number>: passed: isOwned( original ) for: true
 String.tests.cpp:<line number>: passed: ss.empty() == false for: false == false
 String.tests.cpp:<line number>: passed: ss.size() == 5 for: 5 == 5
@@ -837,9 +1023,10 @@ String.tests.cpp:<line number>: passed: isSubstring( ss ) for: true
 String.tests.cpp:<line number>: passed: isOwned( ss ) == false for: false == false
 String.tests.cpp:<line number>: passed: rawChars == s.currentData() for: "hello world!" == "hello world!"
 String.tests.cpp:<line number>: passed: ss.c_str() != rawChars for: "hello" != "hello world!"
-String.tests.cpp:<line number>: passed: isSubstring( ss ) == false for: false == false
 String.tests.cpp:<line number>: passed: isOwned( ss ) for: true
-String.tests.cpp:<line number>: passed: ss.currentData() != s.currentData() for: "hello" != "hello world!"
+String.tests.cpp:<line number>: passed: isOwned(ss) == false for: false == false
+String.tests.cpp:<line number>: passed: ss == "hello" for: hello == "hello"
+String.tests.cpp:<line number>: passed: rawChars == ss.currentData() for: "hello world!" == "hello world!"
 String.tests.cpp:<line number>: passed: ss.size() == 6 for: 6 == 6
 String.tests.cpp:<line number>: passed: std::strcmp( ss.c_str(), "world!" ) == 0 for: 0 == 0
 String.tests.cpp:<line number>: passed: s.c_str() == s2.c_str() for: "hello world!" == "hello world!"
@@ -878,22 +1065,31 @@ Misc.tests.cpp:<line number>: failed: s1 == s2 for: "if ($b == 10) {
 	$a = 20;
 }
 "
-TagAlias.tests.cpp:<line number>: passed: what, Contains( "[@zzz]" ) for: "error: tag alias, '[@zzz]' already registered.
+Tag.tests.cpp:<line number>: passed: what, Contains( "[@zzz]" ) for: "error: tag alias, '[@zzz]' already registered.
 	First seen at: file:2
 	Redefined at: file:10" contains: "[@zzz]"
-TagAlias.tests.cpp:<line number>: passed: what, Contains( "file" ) for: "error: tag alias, '[@zzz]' already registered.
+Tag.tests.cpp:<line number>: passed: what, Contains( "file" ) for: "error: tag alias, '[@zzz]' already registered.
 	First seen at: file:2
 	Redefined at: file:10" contains: "file"
-TagAlias.tests.cpp:<line number>: passed: what, Contains( "2" ) for: "error: tag alias, '[@zzz]' already registered.
+Tag.tests.cpp:<line number>: passed: what, Contains( "2" ) for: "error: tag alias, '[@zzz]' already registered.
 	First seen at: file:2
 	Redefined at: file:10" contains: "2"
-TagAlias.tests.cpp:<line number>: passed: what, Contains( "10" ) for: "error: tag alias, '[@zzz]' already registered.
+Tag.tests.cpp:<line number>: passed: what, Contains( "10" ) for: "error: tag alias, '[@zzz]' already registered.
 	First seen at: file:2
 	Redefined at: file:10" contains: "10"
-TagAlias.tests.cpp:<line number>: passed: registry.add( "[no ampersat]", "", Catch::SourceLineInfo( "file", 3 ) )
-TagAlias.tests.cpp:<line number>: passed: registry.add( "[the @ is not at the start]", "", Catch::SourceLineInfo( "file", 3 ) )
-TagAlias.tests.cpp:<line number>: passed: registry.add( "@no square bracket at start]", "", Catch::SourceLineInfo( "file", 3 ) )
-TagAlias.tests.cpp:<line number>: passed: registry.add( "[@no square bracket at end", "", Catch::SourceLineInfo( "file", 3 ) )
+Tag.tests.cpp:<line number>: passed: registry.add( "[no ampersat]", "", Catch::SourceLineInfo( "file", 3 ) )
+Tag.tests.cpp:<line number>: passed: registry.add( "[the @ is not at the start]", "", Catch::SourceLineInfo( "file", 3 ) )
+Tag.tests.cpp:<line number>: passed: registry.add( "@no square bracket at start]", "", Catch::SourceLineInfo( "file", 3 ) )
+Tag.tests.cpp:<line number>: passed: registry.add( "[@no square bracket at end", "", Catch::SourceLineInfo( "file", 3 ) )
+Class.tests.cpp:<line number>: passed: Template_Fixture<TestType>::m_a == 1 for: 1 == 1
+Class.tests.cpp:<line number>: passed: Template_Fixture<TestType>::m_a == 1 for: 1 == 1
+Class.tests.cpp:<line number>: passed: Template_Fixture<TestType>::m_a == 1 for: 1.0 == 1
+Misc.tests.cpp:<line number>: passed: sizeof(TestType) > 0 for: 1 > 0
+Misc.tests.cpp:<line number>: passed: sizeof(TestType) > 0 for: 1 > 0
+Misc.tests.cpp:<line number>: passed: sizeof(TestType) > 0 for: 4 > 0
+Misc.tests.cpp:<line number>: passed: sizeof(TestType) > 0 for: 4 > 0
+Misc.tests.cpp:<line number>: passed: sizeof(TestType) > 0 for: 1 > 0
+Misc.tests.cpp:<line number>: passed: sizeof(TestType) > 0 for: 4 > 0
 Misc.tests.cpp:<line number>: passed: v.size() == 5 for: 5 == 5
 Misc.tests.cpp:<line number>: passed: v.capacity() >= 5 for: 5 >= 5
 Misc.tests.cpp:<line number>: passed: v.size() == 10 for: 10 == 10
@@ -962,6 +1158,74 @@ Misc.tests.cpp:<line number>: passed: v.size() == 5 for: 5 == 5
 Misc.tests.cpp:<line number>: passed: v.capacity() >= 5 for: 5 >= 5
 Misc.tests.cpp:<line number>: passed: v.size() == 5 for: 5 == 5
 Misc.tests.cpp:<line number>: passed: v.capacity() >= 5 for: 5 >= 5
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 6 == 6
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 6 >= 6
+Misc.tests.cpp:<line number>: passed: v.size() == 2 * V for: 12 == 12
+Misc.tests.cpp:<line number>: passed: v.capacity() >= 2 * V for: 12 >= 12
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 6 == 6
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 6 >= 6
+Misc.tests.cpp:<line number>: passed: v.size() == 0 for: 0 == 0
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 6 >= 6
+Misc.tests.cpp:<line number>: passed: v.capacity() == 0 for: 0 == 0
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 6 == 6
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 6 >= 6
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 6 == 6
+Misc.tests.cpp:<line number>: passed: v.capacity() >= 2 * V for: 12 >= 12
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 6 == 6
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 6 >= 6
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 6 == 6
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 6 >= 6
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 4 == 4
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 4 >= 4
+Misc.tests.cpp:<line number>: passed: v.size() == 2 * V for: 8 == 8
+Misc.tests.cpp:<line number>: passed: v.capacity() >= 2 * V for: 8 >= 8
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 4 == 4
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 4 >= 4
+Misc.tests.cpp:<line number>: passed: v.size() == 0 for: 0 == 0
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 4 >= 4
+Misc.tests.cpp:<line number>: passed: v.capacity() == 0 for: 0 == 0
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 4 == 4
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 4 >= 4
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 4 == 4
+Misc.tests.cpp:<line number>: passed: v.capacity() >= 2 * V for: 8 >= 8
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 4 == 4
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 4 >= 4
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 4 == 4
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 4 >= 4
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 5 == 5
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 5 >= 5
+Misc.tests.cpp:<line number>: passed: v.size() == 2 * V for: 10 == 10
+Misc.tests.cpp:<line number>: passed: v.capacity() >= 2 * V for: 10 >= 10
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 5 == 5
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 5 >= 5
+Misc.tests.cpp:<line number>: passed: v.size() == 0 for: 0 == 0
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 5 >= 5
+Misc.tests.cpp:<line number>: passed: v.capacity() == 0 for: 0 == 0
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 5 == 5
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 5 >= 5
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 5 == 5
+Misc.tests.cpp:<line number>: passed: v.capacity() >= 2 * V for: 10 >= 10
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 5 == 5
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 5 >= 5
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 5 == 5
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 5 >= 5
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 15 == 15
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 15 >= 15
+Misc.tests.cpp:<line number>: passed: v.size() == 2 * V for: 30 == 30
+Misc.tests.cpp:<line number>: passed: v.capacity() >= 2 * V for: 30 >= 30
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 15 == 15
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 15 >= 15
+Misc.tests.cpp:<line number>: passed: v.size() == 0 for: 0 == 0
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 15 >= 15
+Misc.tests.cpp:<line number>: passed: v.capacity() == 0 for: 0 == 0
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 15 == 15
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 15 >= 15
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 15 == 15
+Misc.tests.cpp:<line number>: passed: v.capacity() >= 2 * V for: 30 >= 30
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 15 == 15
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 15 >= 15
+Misc.tests.cpp:<line number>: passed: v.size() == V for: 15 == 15
+Misc.tests.cpp:<line number>: passed: v.capacity() >= V for: 15 >= 15
 VariadicMacros.tests.cpp:<line number>: passed: with 1 message: 'no assertions'
 Tricky.tests.cpp:<line number>: passed: 0x<hex digits> == bit30and31 for: 3221225472 (0x<hex digits>) == 3221225472
 Message.tests.cpp:<line number>: failed - but was ok: 1 == 2
@@ -1034,69 +1298,6 @@ PartTracker.tests.cpp:<line number>: passed: s1.isComplete() == false for: false
 PartTracker.tests.cpp:<line number>: passed: s1.isComplete() for: true
 PartTracker.tests.cpp:<line number>: passed: testCase.isComplete() == false for: false == false
 PartTracker.tests.cpp:<line number>: passed: testCase.isComplete() for: true
-PartTracker.tests.cpp:<line number>: passed: testCase.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: s1.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: g1.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: g1.index() == 0 for: 0 == 0
-PartTracker.tests.cpp:<line number>: passed: g1.isComplete() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: s1.isComplete() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: s1.isComplete() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: testCase.isSuccessfullyCompleted() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: testCase2.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: s1b.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: g1b.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: g1b.index() == 1 for: 1 == 1
-PartTracker.tests.cpp:<line number>: passed: s1.isComplete() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: s1b.isComplete() for: true
-PartTracker.tests.cpp:<line number>: passed: g1b.isComplete() for: true
-PartTracker.tests.cpp:<line number>: passed: testCase2.isComplete() for: true
-PartTracker.tests.cpp:<line number>: passed: testCase.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: s1.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: g1.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: g1.index() == 0 for: 0 == 0
-PartTracker.tests.cpp:<line number>: passed: g1.isComplete() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: s1.isComplete() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: s2.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: s2.isComplete() for: true
-PartTracker.tests.cpp:<line number>: passed: s1.isComplete() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: testCase.isComplete() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: testCase2.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: s1b.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: g1b.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: g1b.index() == 1 for: 1 == 1
-PartTracker.tests.cpp:<line number>: passed: s2b.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: s2b.isComplete() for: true
-PartTracker.tests.cpp:<line number>: passed: g1b.isComplete() for: true
-PartTracker.tests.cpp:<line number>: passed: s1b.isComplete() for: true
-PartTracker.tests.cpp:<line number>: passed: testCase2.isComplete() for: true
-PartTracker.tests.cpp:<line number>: passed: testCase.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: s1.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: g1.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: g1.index() == 0 for: 0 == 0
-PartTracker.tests.cpp:<line number>: passed: g1.isComplete() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: s1.isComplete() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: s2.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: s2.isComplete() for: true
-PartTracker.tests.cpp:<line number>: passed: s2.isSuccessfullyCompleted() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: s1.isComplete() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: testCase.isComplete() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: testCase2.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: s1b.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: g1b.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: g1b.index() == 0 for: 0 == 0
-PartTracker.tests.cpp:<line number>: passed: s2b.isOpen() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: g1b.isComplete() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: s1b.isComplete() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: testCase2.isComplete() == false for: false == false
-PartTracker.tests.cpp:<line number>: passed: testCase3.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: s1c.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: g1c.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: g1c.index() == 1 for: 1 == 1
-PartTracker.tests.cpp:<line number>: passed: s2c.isOpen() for: true
-PartTracker.tests.cpp:<line number>: passed: s2c.isComplete() for: true
-PartTracker.tests.cpp:<line number>: passed: g1c.isComplete() for: true
-PartTracker.tests.cpp:<line number>: passed: s1c.isComplete() for: true
-PartTracker.tests.cpp:<line number>: passed: testCase3.isComplete() for: true
 Exception.tests.cpp:<line number>: failed: unexpected exception with message: '3.14'
 Approx.tests.cpp:<line number>: passed: d == approx( 1.23 ) for: 1.23 == Approx( 1.23 )
 Approx.tests.cpp:<line number>: passed: d == approx( 1.22 ) for: 1.23 == Approx( 1.22 )
@@ -1107,6 +1308,15 @@ Approx.tests.cpp:<line number>: passed: approx( d ) == 1.22 for: Approx( 1.23 ) 
 Approx.tests.cpp:<line number>: passed: approx( d ) == 1.24 for: Approx( 1.23 ) == 1.24
 Approx.tests.cpp:<line number>: passed: approx( d ) != 1.25 for: Approx( 1.23 ) != 1.25
 VariadicMacros.tests.cpp:<line number>: passed: with 1 message: 'no assertions'
+Matchers.tests.cpp:<line number>: passed: empty, Approx(empty) for: {  } is approx: {  }
+Matchers.tests.cpp:<line number>: passed: v1, Approx(v1) for: { 1.0, 2.0, 3.0 } is approx: { 1.0, 2.0, 3.0 }
+Matchers.tests.cpp:<line number>: passed: v1, !Approx(temp) for: { 1.0, 2.0, 3.0 } not is approx: { 1.0, 2.0, 3.0, 4.0 }
+Matchers.tests.cpp:<line number>: passed: v1, !Approx(v2) for: { 1.0, 2.0, 3.0 } not is approx: { 1.5, 2.5, 3.5 }
+Matchers.tests.cpp:<line number>: passed: v1, Approx(v2).margin(0.5) for: { 1.0, 2.0, 3.0 } is approx: { 1.5, 2.5, 3.5 }
+Matchers.tests.cpp:<line number>: passed: v1, Approx(v2).epsilon(0.5) for: { 1.0, 2.0, 3.0 } is approx: { 1.5, 2.5, 3.5 }
+Matchers.tests.cpp:<line number>: passed: v1, Approx(v2).epsilon(0.1).scale(500) for: { 1.0, 2.0, 3.0 } is approx: { 1.5, 2.5, 3.5 }
+Matchers.tests.cpp:<line number>: failed: empty, Approx(t1) for: {  } is approx: { 1.0, 2.0 }
+Matchers.tests.cpp:<line number>: failed: v1, Approx(v2) for: { 2.0, 4.0, 6.0 } is approx: { 1.0, 3.0, 5.0 }
 Matchers.tests.cpp:<line number>: passed: v, VectorContains(1) for: { 1, 2, 3 } Contains: 1
 Matchers.tests.cpp:<line number>: passed: v, VectorContains(2) for: { 1, 2, 3 } Contains: 2
 Matchers.tests.cpp:<line number>: passed: v, Contains(v2) for: { 1, 2, 3 } Contains: { 1, 2 }
@@ -1231,6 +1441,7 @@ Misc.tests.cpp:<line number>: passed:
 Misc.tests.cpp:<line number>: passed:
 loose text artifact
 Message.tests.cpp:<line number>: failed: explicitly with 1 message: 'Previous info should not be seen'
+Message.tests.cpp:<line number>: failed: explicitly with 1 message: 'previous unscoped info SHOULD not be seen'
 Misc.tests.cpp:<line number>: passed: l == std::numeric_limits<long long>::max() for: 9223372036854775807 (0x<hex digits>)
 ==
 9223372036854775807 (0x<hex digits>)
@@ -1252,6 +1463,8 @@ Misc.tests.cpp:<line number>: failed: ( fib[i] % 2 ) == 0 for: 1 == 0 with 1 mes
 Misc.tests.cpp:<line number>: passed: ( fib[i] % 2 ) == 0 for: 0 == 0 with 1 message: 'Testing if fib[5] (8) is even'
 Misc.tests.cpp:<line number>: failed: ( fib[i] % 2 ) == 0 for: 1 == 0 with 1 message: 'Testing if fib[6] (13) is even'
 Misc.tests.cpp:<line number>: failed: ( fib[i] % 2 ) == 0 for: 1 == 0 with 1 message: 'Testing if fib[7] (21) is even'
+Message.tests.cpp:<line number>: warning: 'info' with 2 messages: 'unscoped info' and 'and warn may mix'
+Message.tests.cpp:<line number>: warning: 'info' with 2 messages: 'unscoped info' and 'they are not cleared after warnings'
 Misc.tests.cpp:<line number>: failed: a == b for: 1 == 2
 Misc.tests.cpp:<line number>: passed: a != b for: 1 != 2
 Misc.tests.cpp:<line number>: passed: a < b for: 1 < 2
@@ -1261,13 +1474,29 @@ Misc.tests.cpp:<line number>: passed: a != b for: 1 != 2
 Tricky.tests.cpp:<line number>: passed: s == "7" for: "7" == "7"
 Tricky.tests.cpp:<line number>: passed: ti == typeid(int) for: {?} == {?}
 Misc.tests.cpp:<line number>: passed:
+Message.tests.cpp:<line number>: passed: true with 1 message: 'this MAY be seen only for the FIRST assertion IF info is printed for passing assertions'
+Message.tests.cpp:<line number>: passed: true with 1 message: 'this MAY be seen only for the SECOND assertion IF info is printed for passing assertions'
+Message.tests.cpp:<line number>: failed: false with 1 message: 'this SHOULD be seen'
 Misc.tests.cpp:<line number>: passed: makeString( false ) != static_cast<char*>(0) for: "valid string" != {null string}
 Misc.tests.cpp:<line number>: passed: makeString( true ) == static_cast<char*>(0) for: {null string} == {null string}
 Tricky.tests.cpp:<line number>: passed: ptr.get() == 0 for: 0 == 0
 ToStringPair.tests.cpp:<line number>: passed: ::Catch::Detail::stringify( pair ) == "{ { 42, \"Arthur\" }, { \"Ford\", 24 } }" for: "{ { 42, "Arthur" }, { "Ford", 24 } }"
 ==
 "{ { 42, "Arthur" }, { "Ford", 24 } }"
+ToString.tests.cpp:<line number>: passed: parseEnums( "" ), Equals( std::vector<std::string>{} ) for: {  } Equals: {  }
+ToString.tests.cpp:<line number>: passed: parseEnums( "ClassName::EnumName::Value1" ), Equals(std::vector<std::string>{"Value1"} ) for: { "Value1" } Equals: { "Value1" }
+ToString.tests.cpp:<line number>: passed: parseEnums( "Value1" ), Equals( std::vector<std::string>{"Value1"} ) for: { "Value1" } Equals: { "Value1" }
+ToString.tests.cpp:<line number>: passed: parseEnums( "EnumName::Value1" ), Equals(std::vector<std::string>{"Value1"} ) for: { "Value1" } Equals: { "Value1" }
+ToString.tests.cpp:<line number>: passed: parseEnums( "ClassName::EnumName::Value1, ClassName::EnumName::Value2" ), Equals( std::vector<std::string>{"Value1", "Value2"} ) for: { "Value1", "Value2" } Equals: { "Value1", "Value2" }
+ToString.tests.cpp:<line number>: passed: parseEnums( "ClassName::EnumName::Value1, ClassName::EnumName::Value2, ClassName::EnumName::Value3" ), Equals( std::vector<std::string>{"Value1", "Value2", "Value3"} ) for: { "Value1", "Value2", "Value3" } Equals: { "Value1", "Value2", "Value3" }
+ToString.tests.cpp:<line number>: passed: parseEnums( "ClassName::EnumName::Value1,ClassName::EnumName::Value2 , ClassName::EnumName::Value3" ), Equals( std::vector<std::string>{"Value1", "Value2", "Value3"} ) for: { "Value1", "Value2", "Value3" } Equals: { "Value1", "Value2", "Value3" }
 Tricky.tests.cpp:<line number>: passed: p == 0 for: 0 == 0
+Message.tests.cpp:<line number>: passed: true with 1 message: 'this MAY be seen IF info is printed for passing assertions'
+Message.tests.cpp:<line number>: failed: false with 2 messages: 'this SHOULD be seen' and 'this SHOULD also be seen'
+Message.tests.cpp:<line number>: failed: false with 1 message: 'this SHOULD be seen only ONCE'
+Message.tests.cpp:<line number>: passed: true
+Message.tests.cpp:<line number>: passed: true with 1 message: 'this MAY also be seen only ONCE IF info is printed for passing assertions'
+Message.tests.cpp:<line number>: passed: true
 Misc.tests.cpp:<line number>: passed: a != b for: 1 != 2
 Misc.tests.cpp:<line number>: passed: b != a for: 2 != 1
 Misc.tests.cpp:<line number>: passed: a != b for: 1 != 2
@@ -1287,6 +1516,12 @@ String.tests.cpp:<line number>: passed: Catch::replaceInPlace( s, "'", "|'" ) fo
 String.tests.cpp:<line number>: passed: s == "didn|'t" for: "didn|'t" == "didn|'t"
 Misc.tests.cpp:<line number>: failed: false with 1 message: '3'
 Message.tests.cpp:<line number>: failed: false with 2 messages: 'hi' and 'i := 7'
+Tag.tests.cpp:<line number>: passed: testcase.tags, Catch::VectorContains(std::string("magic-tag")) && Catch::VectorContains(std::string(".")) for: { ".", "magic-tag" } ( Contains: "magic-tag" and Contains: "." )
+String.tests.cpp:<line number>: passed: splitStringRef("", ',' ), Equals(std::vector<StringRef>() ) for: {  } Equals: {  }
+String.tests.cpp:<line number>: passed: splitStringRef("abc", ',' ), Equals(std::vector<StringRef>{"abc"} ) for: { abc } Equals: { abc }
+String.tests.cpp:<line number>: passed: splitStringRef("abc,def", ',' ), Equals(std::vector<StringRef>{"abc", "def"} ) for: { abc, def } Equals: { abc, def }
+Message.tests.cpp:<line number>: failed: false with 4 messages: 'Count 1 to 3...' and '1' and '2' and '3'
+Message.tests.cpp:<line number>: failed: false with 4 messages: 'Count 4 to 6...' and '4' and '5' and '6'
 ToStringGeneral.tests.cpp:<line number>: passed: Catch::Detail::stringify( emptyMap ) == "{  }" for: "{  }" == "{  }"
 ToStringGeneral.tests.cpp:<line number>: passed: Catch::Detail::stringify( map ) == "{ { \"one\", 1 } }" for: "{ { "one", 1 } }" == "{ { "one", 1 } }"
 ToStringGeneral.tests.cpp:<line number>: passed: Catch::Detail::stringify( map ) == "{ { \"abc\", 1 }, { \"def\", 2 }, { \"ghi\", 3 } }" for: "{ { "abc", 1 }, { "def", 2 }, { "ghi", 3 } }"
@@ -1337,6 +1572,10 @@ Generators.tests.cpp:<line number>: passed: data.str.size() == data.len for: 3 =
 Generators.tests.cpp:<line number>: passed: data.str.size() == data.len for: 3 == 3
 Generators.tests.cpp:<line number>: passed: data.str.size() == data.len for: 5 == 5
 Generators.tests.cpp:<line number>: passed: data.str.size() == data.len for: 4 == 4
+Generators.tests.cpp:<line number>: passed: strlen(std::get<0>(data)) == static_cast<size_t>(std::get<1>(data)) for: 5 == 5
+Generators.tests.cpp:<line number>: passed: strlen(std::get<0>(data)) == static_cast<size_t>(std::get<1>(data)) for: 6 == 6
+Generators.tests.cpp:<line number>: passed: strlen(std::get<0>(data)) == static_cast<size_t>(std::get<1>(data)) for: 5 == 5
+Generators.tests.cpp:<line number>: passed: strlen(std::get<0>(data)) == static_cast<size_t>(std::get<1>(data)) for: 6 == 6
 Exception.tests.cpp:<line number>: failed: unexpected exception with message: 'Why would you throw a std::string?'
 Misc.tests.cpp:<line number>: passed: result == "\"wide load\"" for: ""wide load"" == ""wide load""
 Misc.tests.cpp:<line number>: passed: result == "\"wide load\"" for: ""wide load"" == ""wide load""
@@ -1404,5 +1643,5 @@ Misc.tests.cpp:<line number>: passed: v.size() == 5 for: 5 == 5
 Misc.tests.cpp:<line number>: passed: v.capacity() >= 5 for: 5 >= 5
 Misc.tests.cpp:<line number>: passed:
 Misc.tests.cpp:<line number>: passed:
-Failed 69 test cases, failed 129 assertions.
+Failed 86 test cases, failed 148 assertions.
 

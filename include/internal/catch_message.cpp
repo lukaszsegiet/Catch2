@@ -9,6 +9,7 @@
 #include "catch_message.h"
 #include "catch_interfaces_capture.h"
 #include "catch_uncaught_exceptions.h"
+#include "catch_enforce.h"
 
 #include <cassert>
 #include <stack>
@@ -47,14 +48,20 @@ namespace Catch {
 
 
     ScopedMessage::ScopedMessage( MessageBuilder const& builder )
-    : m_info( builder.m_info )
+    : m_info( builder.m_info ), m_moved()
     {
         m_info.message = builder.m_stream.str();
         getResultCapture().pushScopedMessage( m_info );
     }
 
+    ScopedMessage::ScopedMessage( ScopedMessage&& old )
+    : m_info( old.m_info ), m_moved()
+    {
+        old.m_moved = true;
+    }
+
     ScopedMessage::~ScopedMessage() {
-        if ( !uncaught_exceptions() ){
+        if ( !uncaught_exceptions() && !m_moved ){
             getResultCapture().popScopedMessage(m_info);
         }
     }
@@ -69,6 +76,15 @@ namespace Catch {
                 --end;
             }
             return names.substr(start, end - start + 1);
+        };
+        auto skipq = [&] (size_t start, char quote) {
+            for (auto i = start + 1; i < names.size() ; ++i) {
+                if (names[i] == quote)
+                    return i;
+                if (names[i] == '\\')
+                    ++i;
+            }
+            CATCH_INTERNAL_ERROR("CAPTURE parsing encountered unmatched quote");
         };
 
         size_t start = 0;
@@ -89,6 +105,10 @@ namespace Catch {
             case ')':
 //           case '>':
                 openings.pop();
+                break;
+            case '"':
+            case '\'':
+                pos = skipq(pos, c);
                 break;
             case ',':
                 if (start != pos && openings.size() == 0) {
