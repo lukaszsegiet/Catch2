@@ -16,6 +16,7 @@
 [Windows header clutter](#windows-header-clutter)<br>
 [Enabling stringification](#enabling-stringification)<br>
 [Disabling exceptions](#disabling-exceptions)<br>
+[Overriding Catch's debug break (`-b`)](#overriding-catchs-debug-break--b)<br>
 
 Catch is designed to "just work" as much as possible. For most people the only configuration needed is telling Catch which source file should host all the implementation code (```CATCH_CONFIG_MAIN```).
 
@@ -155,6 +156,10 @@ by using `_NO_` in the macro, e.g. `CATCH_CONFIG_NO_CPP17_UNCAUGHT_EXCEPTIONS`.
     CATCH_CONFIG_EXPERIMENTAL_REDIRECT      // Enables the new (experimental) way of capturing stdout/stderr
     CATCH_CONFIG_ENABLE_BENCHMARKING        // Enables the integrated benchmarking features (has a significant effect on compilation speed)
     CATCH_CONFIG_USE_ASYNC                  // Force parallel statistical processing of samples during benchmarking
+    CATCH_CONFIG_ANDROID_LOGWRITE           // Use android's logging system for debug output
+    CATCH_CONFIG_GLOBAL_NEXTAFTER           // Use nextafter{,f,l} instead of std::nextafter
+
+> [`CATCH_CONFIG_ANDROID_LOGWRITE`](https://github.com/catchorg/Catch2/issues/1743) and [`CATCH_CONFIG_GLOBAL_NEXTAFTER`](https://github.com/catchorg/Catch2/pull/1739) were introduced in Catch 2.10.0
 
 Currently Catch enables `CATCH_CONFIG_WINDOWS_SEH` only when compiled with MSVC, because some versions of MinGW do not have the necessary Win32 API support.
 
@@ -252,6 +257,18 @@ namespace Catch {
     void throw_exception(std::exception const&);
 }
 ```
+
+## Overriding Catch's debug break (`-b`)
+
+> [Introduced](https://github.com/catchorg/Catch2/pull/1846) in Catch 2.11.2.
+
+You can override Catch2's break-into-debugger code by defining the
+`CATCH_BREAK_INTO_DEBUGGER()` macro. This can be used if e.g. Catch2 does
+not know your platform, or your platform is misdetected.
+
+The macro will be used as is, that is, `CATCH_BREAK_INTO_DEBUGGER();`
+must compile and must break into debugger.
+
 
 ---
 

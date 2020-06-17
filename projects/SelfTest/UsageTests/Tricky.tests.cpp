@@ -17,7 +17,7 @@
 
 #include "catch.hpp"
 
-#include <stdio.h>
+#include <cstdio>
 #include <sstream>
 #include <iostream>
 
@@ -388,12 +388,6 @@ TEST_CASE("Commas in various macros are allowed") {
     } CHECKED_ELSE( std::vector<int>{1, 2} == std::vector<int>{1, 2} ) {
         CHECK(true);
     }
-}
-
-TEST_CASE( "null deref", "[.][failing][!nonportable]" ) {
-    CHECK( false );
-    int *x = NULL;
-    *x = 1;
 }
 
 TEST_CASE( "non-copyable objects", "[.][failing]" ) {

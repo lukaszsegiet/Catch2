@@ -21,8 +21,10 @@ set(TEST_SOURCES
         ${SELF_TEST_DIR}/IntrospectiveTests/GeneratorsImpl.tests.cpp
         ${SELF_TEST_DIR}/IntrospectiveTests/InternalBenchmark.tests.cpp
         ${SELF_TEST_DIR}/IntrospectiveTests/PartTracker.tests.cpp
+        ${SELF_TEST_DIR}/IntrospectiveTests/RandomNumberGeneration.tests.cpp
         ${SELF_TEST_DIR}/IntrospectiveTests/Tag.tests.cpp
         ${SELF_TEST_DIR}/IntrospectiveTests/String.tests.cpp
+        ${SELF_TEST_DIR}/IntrospectiveTests/StringManip.tests.cpp
         ${SELF_TEST_DIR}/IntrospectiveTests/Xml.tests.cpp
         ${SELF_TEST_DIR}/IntrospectiveTests/ToString.tests.cpp
         ${SELF_TEST_DIR}/UsageTests/Approx.tests.cpp
@@ -149,6 +151,7 @@ set(INTERNAL_HEADERS
         ${HEADER_DIR}/internal/catch_leak_detector.h
         ${HEADER_DIR}/internal/catch_list.h
         ${HEADER_DIR}/internal/catch_matchers.h
+        ${HEADER_DIR}/internal/catch_matchers_exception.hpp
         ${HEADER_DIR}/internal/catch_matchers_floating.h
         ${HEADER_DIR}/internal/catch_matchers_generic.hpp
         ${HEADER_DIR}/internal/catch_matchers_string.h
@@ -191,7 +194,6 @@ set(INTERNAL_HEADERS
         ${HEADER_DIR}/internal/catch_to_string.hpp
         ${HEADER_DIR}/internal/catch_tostring.h
         ${HEADER_DIR}/internal/catch_totals.h
-        ${HEADER_DIR}/internal/catch_type_traits.hpp
         ${HEADER_DIR}/internal/catch_uncaught_exceptions.h
         ${HEADER_DIR}/internal/catch_user_interfaces.h
         ${HEADER_DIR}/internal/catch_version.h
@@ -228,6 +230,7 @@ set(IMPL_SOURCES
         ${HEADER_DIR}/internal/catch_list.cpp
         ${HEADER_DIR}/internal/catch_leak_detector.cpp
         ${HEADER_DIR}/internal/catch_matchers.cpp
+        ${HEADER_DIR}/internal/catch_matchers_exception.cpp
         ${HEADER_DIR}/internal/catch_matchers_floating.cpp
         ${HEADER_DIR}/internal/catch_matchers_generic.cpp
         ${HEADER_DIR}/internal/catch_matchers_string.cpp
@@ -279,6 +282,7 @@ set(REPORTER_HEADERS
         ${HEADER_DIR}/reporters/catch_reporter_tap.hpp
         ${HEADER_DIR}/reporters/catch_reporter_teamcity.hpp
         ${HEADER_DIR}/reporters/catch_reporter_xml.h
+        ${HEADER_DIR}/reporters/catch_reporter_sonarqube.hpp
         )
 set(REPORTER_SOURCES
         ${HEADER_DIR}/reporters/catch_reporter_bases.cpp
@@ -423,6 +427,32 @@ set_tests_properties(RegressionCheck-1670 PROPERTIES PASS_REGULAR_EXPRESSION "Pa
 add_test(NAME VersionCheck COMMAND $<TARGET_FILE:SelfTest> -h)
 set_tests_properties(VersionCheck PROPERTIES PASS_REGULAR_EXPRESSION "Catch v${PROJECT_VERSION}")
 
+add_test(NAME LibIdentityTest COMMAND $<TARGET_FILE:SelfTest> --libidentify)
+set_tests_properties(LibIdentityTest PROPERTIES PASS_REGULAR_EXPRESSION "description:    A Catch2 test executable")
+
+add_test(NAME FilenameAsTagsTest COMMAND $<TARGET_FILE:SelfTest> -\# --list-tags)
+set_tests_properties(FilenameAsTagsTest PROPERTIES PASS_REGULAR_EXPRESSION "\\[#Approx.tests\\]")
+
+add_test(NAME EscapeSpecialCharactersInTestNames COMMAND $<TARGET_FILE:SelfTest> "Test with special\\, characters \"in name")
+set_tests_properties(EscapeSpecialCharactersInTestNames PROPERTIES PASS_REGULAR_EXPRESSION "1 assertion in 1 test case")
+
+add_test(NAME TestsInFile::SimpleSpecs COMMAND $<TARGET_FILE:SelfTest> "-f ${CATCH_DIR}/projects/SelfTest/Misc/plain-old-tests.input")
+set_tests_properties(TestsInFile::SimpleSpecs PROPERTIES PASS_REGULAR_EXPRESSION "6 assertions in 2 test cases")
+
+add_test(NAME TestsInFile::EscapeSpecialCharacters COMMAND $<TARGET_FILE:SelfTest> "-f ${CATCH_DIR}/projects/SelfTest/Misc/special-characters-in-file.input")
+set_tests_properties(TestsInFile::EscapeSpecialCharacters PROPERTIES PASS_REGULAR_EXPRESSION "1 assertion in 1 test case")
+
+# CTest does not allow us to create an AND of required regular expressions,
+# so we have to split the test into 2 parts and look for parts of the expected
+# output separately.
+add_test(NAME TestsInFile::InvalidTestNames-1 COMMAND $<TARGET_FILE:SelfTest> "-f ${CATCH_DIR}/projects/SelfTest/Misc/invalid-test-names.input")
+set_tests_properties(TestsInFile::InvalidTestNames-1 PROPERTIES PASS_REGULAR_EXPRESSION "Invalid Filter: \"Test with special, characters in \\\\\" name\"")
+
+add_test(NAME TestsInFile::InvalidTestNames-2 COMMAND $<TARGET_FILE:SelfTest> "-f ${CATCH_DIR}/projects/SelfTest/Misc/invalid-test-names.input")
+set_tests_properties(TestsInFile::InvalidTestNames-2 PROPERTIES PASS_REGULAR_EXPRESSION "No tests ran")
+
+add_test(NAME RandomTestOrdering COMMAND ${PYTHON_EXECUTABLE}
+  ${CATCH_DIR}/projects/TestScripts/testRandomOrder.py $<TARGET_FILE:SelfTest>)
 
 if (CATCH_USE_VALGRIND)
     add_test(NAME ValgrindRunTests COMMAND valgrind --leak-check=full --error-exitcode=1 $<TARGET_FILE:SelfTest>)

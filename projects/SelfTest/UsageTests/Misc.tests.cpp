@@ -58,9 +58,11 @@ struct AutoTestReg {
         REGISTER_TEST_CASE( manuallyRegisteredTestFunction, "ManuallyRegistered" );
     }
 };
+
+CATCH_INTERNAL_START_WARNINGS_SUPPRESSION
 CATCH_INTERNAL_SUPPRESS_GLOBALS_WARNINGS
 static AutoTestReg autoTestReg;
-CATCH_INTERNAL_UNSUPPRESS_GLOBALS_WARNINGS
+CATCH_INTERNAL_STOP_WARNINGS_SUPPRESSION
 
 template<typename T>
 struct Foo {
@@ -375,8 +377,23 @@ struct NonDefaultConstructibleType {
     NonDefaultConstructibleType() = delete;
 };
 
-using MyNonDefaultConstructibleTypes = std::tuple<NonDefaultConstructibleType, char, float>;
+using MyNonDefaultConstructibleTypes = std::tuple<NonDefaultConstructibleType, float>;
 TEMPLATE_LIST_TEST_CASE("Template test case with test types specified inside non-default-constructible std::tuple", "[template][list]", MyNonDefaultConstructibleTypes)
+{
+    REQUIRE(sizeof(TestType) > 0);
+}
+
+struct NonCopyableAndNonMovableType {
+    NonCopyableAndNonMovableType() = default;
+
+    NonCopyableAndNonMovableType(NonCopyableAndNonMovableType const &) = delete;
+    NonCopyableAndNonMovableType(NonCopyableAndNonMovableType &&) = delete;
+    auto operator=(NonCopyableAndNonMovableType const &) -> NonCopyableAndNonMovableType & = delete;
+    auto operator=(NonCopyableAndNonMovableType &&) -> NonCopyableAndNonMovableType & = delete;
+};
+
+using NonCopyableAndNonMovableTypes = std::tuple<NonCopyableAndNonMovableType, float>;
+TEMPLATE_LIST_TEST_CASE("Template test case with test types specified inside non-copyable and non-movable std::tuple", "[template][list]", NonCopyableAndNonMovableTypes)
 {
     REQUIRE(sizeof(TestType) > 0);
 }
@@ -465,6 +482,12 @@ TEST_CASE( "#961 -- Dynamically created sections should all be reported", "[.]" 
 TEST_CASE( "#1175 - Hidden Test", "[.]" ) {
   // Just for checking that hidden test is not listed by default
   SUCCEED();
+}
+
+TEMPLATE_TEST_CASE_SIG("#1954 - 7 arg template test case sig compiles", "[regression][.compilation]",
+                       ((int Tnx, int Tnu, int Tny, int Tph, int Tch, int Tineq, int Teq), Tnx, Tnu, Tny, Tph, Tch, Tineq, Teq),
+                       (1, 1, 1, 1, 1, 0, 0), (5, 1, 1, 1, 1, 0, 0), (5, 3, 1, 1, 1, 0, 0)) {
+    SUCCEED();
 }
 
 }} // namespace MiscTests
